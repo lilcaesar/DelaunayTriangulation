@@ -44,7 +44,10 @@ SOURCES += \
     main.cpp \
     managers/delaunaymanager.cpp \
     utils/delaunay_checker.cpp \
-    utils/fileutils.cpp
+    utils/fileutils.cpp \
+    drawabletriangulation.cpp \
+    triangulation.cpp \
+    dag.cpp
 
 FORMS += \
     managers/delaunaymanager.ui
@@ -52,7 +55,10 @@ FORMS += \
 HEADERS += \
     managers/delaunaymanager.h \
     utils/delaunay_checker.h \
-    utils/fileutils.h
+    utils/fileutils.h \
+    drawabletriangulation.h \
+    triangulation.h \
+    dag.h
 
 
 

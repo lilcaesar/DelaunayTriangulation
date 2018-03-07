@@ -7,7 +7,6 @@
 
 #include <cg3/viewer/drawable_objects/2d/drawable_bounding_box2d.h>
 
-
 namespace Ui {
     class DelaunayManager;
 }
