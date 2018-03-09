@@ -43,7 +43,8 @@ DelaunayManager::DelaunayManager(QWidget *parent) :
     ui(new Ui::DelaunayManager),
     mainWindow((cg3::viewer::MainWindow&)*parent),
     boundingBox(cg3::Point2Dd(-BOUNDINGBOX, -BOUNDINGBOX),
-                cg3::Point2Dd(BOUNDINGBOX, BOUNDINGBOX))
+                cg3::Point2Dd(BOUNDINGBOX, BOUNDINGBOX)),
+    triangulation()
 {
     //UI setup
     ui->setupUi(this);
@@ -56,6 +57,7 @@ DelaunayManager::DelaunayManager(QWidget *parent) :
     //Add the drawable object to the mainWindow.
     //The mainWindow will take care of the rendering of the bounding box
     mainWindow.pushObj(&boundingBox, "Bounding box");
+    mainWindow.pushObj(&triangulation, "Triangulation");
 
     //This updates the canvas (call it whenever you change or
     //add some drawable object)
@@ -150,6 +152,7 @@ void DelaunayManager::on_clearPointsPushButton_clicked() {
 
     //Clear here your triangulation
     /******/
+    triangulation.clearTriangulation();
 
     /******/
 
@@ -204,7 +207,7 @@ void DelaunayManager::on_loadPointsPushButton_clicked() {
 
         //Clear here your triangulation
         /******/
-
+        triangulation.clearTriangulation();
         /******/
 
         std::vector<cg3::Point2Dd> points = FileUtils::getPointsFromFile(filename.toStdString());
@@ -212,7 +215,9 @@ void DelaunayManager::on_loadPointsPushButton_clicked() {
 
         //Launch your triangulation algorithm here
         /****/
-
+        for(int i=0; i< points.size(); i++){
+            triangulation.insertVertex(points[i]);
+        }
         /****/
 
         t.stopAndPrint();
@@ -246,13 +251,13 @@ void DelaunayManager::point2DClicked(const cg3::Point2Dd& p) {
     }
     else {
         //Comment the next line, the following is a debug message
-        QMessageBox::information(this, "Point clicked", "Point [" +
+        /*QMessageBox::information(this, "Point clicked", "Point [" +
                                  QString::number(p.x()) + "," + QString::number(p.y()) +
-                                 "].");
+                                 "].");*/
 
         //Manage here the insertion of the point inside the triangulation
         /******/
-
+        triangulation.insertVertex(p);
         /******/
 
     }

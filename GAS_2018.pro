@@ -47,7 +47,8 @@ SOURCES += \
     utils/fileutils.cpp \
     drawabletriangulation.cpp \
     triangulation.cpp \
-    dag.cpp
+    dag.cpp \
+    triangle.cpp
 
 FORMS += \
     managers/delaunaymanager.ui
@@ -58,7 +59,8 @@ HEADERS += \
     utils/fileutils.h \
     drawabletriangulation.h \
     triangulation.h \
-    dag.h
+    dag.h \
+    triangle.h
 
 
 

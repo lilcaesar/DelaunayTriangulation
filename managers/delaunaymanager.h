@@ -7,6 +7,9 @@
 
 #include <cg3/viewer/drawable_objects/2d/drawable_bounding_box2d.h>
 
+#include <drawabletriangulation.h>
+
+
 namespace Ui {
     class DelaunayManager;
 }
@@ -33,6 +36,7 @@ private:
     //It is const because, once defined and initialized, it will never change!
     const cg3::DrawableBoundingBox2D boundingBox;
 
+    DrawableTriangulation triangulation;
 
     /* ----- Private methods ----- */
 

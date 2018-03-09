@@ -7,12 +7,12 @@ class Triangulation
 {
 public:
     Triangulation();
+    bool clearTriangulation();
+    void insertVertex(cg3::Point2Dd point);
 
 protected:
     std::vector<cg3::Point2Dd> points;
     std::vector<unsigned int> triangles;
-
-    int pNum, tNum;
 };
 
 #endif // TRIANGULATION_H
