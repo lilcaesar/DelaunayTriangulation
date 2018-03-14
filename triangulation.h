@@ -8,7 +8,7 @@ class Triangulation
 public:
     Triangulation();
     bool clearTriangulation();
-    void insertVertex(cg3::Point2Dd point);
+    void insertVertex(const cg3::Point2Dd& point);
 
 protected:
     std::vector<cg3::Point2Dd> points;

@@ -7,7 +7,8 @@ class DAG
 {
 public:
     DAG();
-
+    Triangle* getRootTriangle();
+    void addNode(Triangle* newNode);
 
 private:
     int nTriangle;

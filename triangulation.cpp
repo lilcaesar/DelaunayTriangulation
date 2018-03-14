@@ -14,7 +14,7 @@ bool Triangulation::clearTriangulation(){
     return false;
 }
 
-void Triangulation::insertVertex(cg3::Point2Dd point)
+void Triangulation::insertVertex(const cg3::Point2Dd& point)
 {
     points.push_back(point);
 }

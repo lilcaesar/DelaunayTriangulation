@@ -88,6 +88,7 @@ DelaunayManager::~DelaunayManager() {
 
     //Delete the bounding box drawable object
     mainWindow.deleteObj(&boundingBox);
+    mainWindow.deleteObj(&triangulation);
 
     delete ui;
 }
@@ -152,8 +153,8 @@ void DelaunayManager::on_clearPointsPushButton_clicked() {
 
     //Clear here your triangulation
     /******/
-    triangulation.clearTriangulation();
-
+    if(!triangulation.clearTriangulation())
+        std::cout << "Clear triangulation failed"<<std::endl;
     /******/
 
 
