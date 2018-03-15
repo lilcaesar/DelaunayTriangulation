@@ -49,7 +49,7 @@ SOURCES += \
     triangulation.cpp \
     dag.cpp \
     triangle.cpp \
-    algorythms.cpp
+    algorithms.cpp
 
 FORMS += \
     managers/delaunaymanager.ui
@@ -62,7 +62,7 @@ HEADERS += \
     triangulation.h \
     dag.h \
     triangle.h \
-    algorythms.h
+    algorithms.h
 
 
 
