@@ -4,12 +4,13 @@
 
 int findTriangle(const cg3::Point2Dd& vertex, Triangulation& triangulation,const DAG& graph){
     Triangle* triangle=graph.getRootTriangle();
-    while(!cg3::isPointLyingInTriangle(
-              ))
+    bool found;
+    found=cg3::isPointLyingInTriangle()
+    while(found)
 }
 
 void insertVertex(const cg3::Point2Dd& newVertex, Triangulation& triangulation, DAG& graph){
     int triangleIndex;
     triangulation.insertVertex(newVertex);
-    triangleIndex = findTriangle(newVertex, graph);
+    triangleIndex = findTriangle(newVertex, triangulation, graph);
 }
