@@ -13,7 +13,8 @@ public:
     std::vector<cg3::Point2Dd*> getTriangleVertices(int triangleIndex);
 
 protected:
-    std::vector<Triangle*> triangles;
+    std::vector<cg3::Point2Dd> points;
+    std::vector<Triangle> triangles;
 };
 
 #endif // TRIANGULATION_H

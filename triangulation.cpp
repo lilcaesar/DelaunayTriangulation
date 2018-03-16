@@ -15,13 +15,5 @@ bool Triangulation::clearTriangulation(){
 
 void Triangulation::insertVertex(const cg3::Point2Dd& point)
 {
-    points.push_back(point);
-}
-
-std::vector<cg3::Point2Dd*> Triangulation::getTriangleVertices(Triangle& triangle){
-    std::vector<cg3::Point2Dd*> vertices;
-    vertices.push_back(&triangle.p1());
-    vertices.push_back(&triangle.p1());
-    vertices.push_back(&triangle.p1());
-    return vertices;
+    //points.push_back(point);
 }

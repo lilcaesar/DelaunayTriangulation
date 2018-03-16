@@ -12,6 +12,10 @@ public:
     void draw() const;
     cg3::Pointd sceneCenter() const;
     double sceneRadius() const;
+
+private:
+    QColor coloreLinee;
+    QColor colorePunti;
 };
 
 #endif // DRAWABLETRIANGULATION_H
