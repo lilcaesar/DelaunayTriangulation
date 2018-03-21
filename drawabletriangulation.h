@@ -8,6 +8,8 @@ class DrawableTriangulation : public Triangulation ,public cg3::DrawableObject{
 public:
     DrawableTriangulation();
 
+    DrawableTriangulation(Triangle* triangle);
+
     //DrawableObject interface methods
     void draw() const;
     cg3::Pointd sceneCenter() const;

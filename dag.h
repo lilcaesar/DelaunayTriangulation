@@ -7,8 +7,11 @@ class DAG
 {
 public:
     DAG();
-    Triangle getRootTriangle() const;
+    DAG(Triangle triangle);
+    Triangle& getRootTriangle();
     void addNodes(int triangle,const cg3::Point2Dd& newPoint);
+    Triangle& getTriangle(int index);
+    int getNtriangles() const;
 
 private:
     int nTriangle;

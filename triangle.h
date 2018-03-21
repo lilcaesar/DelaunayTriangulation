@@ -9,6 +9,7 @@ class Triangle
 public:
     Triangle();
     Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3);
+    Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3, int DAGIndex);
     cg3::Point2Dd p1() const;
     cg3::Point2Dd p2() const;
     cg3::Point2Dd p3() const;
@@ -19,6 +20,8 @@ public:
     int getTriangleDAGIndex() const;
     int getTriangleTriangulationIndex() const;
     bool isLeaf() const;
+    void setDAGIndex(int index);
+    void setTriangulationIndex(int index);
 
 private:
     int triangleDAGIndex;

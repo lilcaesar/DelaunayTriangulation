@@ -29,4 +29,8 @@ void insertVertex(const cg3::Point2Dd& newVertex, Triangulation& triangulation, 
     int triangle;
     triangle = findTriangle(newVertex, graph.getRootTriangle());
     graph.addNodes(triangle, newVertex);
+    triangulation.insertVertex(newVertex);
+    triangulation.swap(graph.getTriangle(triangle).getTriangleTriangulationIndex(), &graph.getTriangle(graph.getNtriangles()-3));
+    triangulation.addTriangle(&graph.getTriangle(graph.getNtriangles()-2));
+    triangulation.addTriangle(&graph.getTriangle(graph.getNtriangles()-1));
 }

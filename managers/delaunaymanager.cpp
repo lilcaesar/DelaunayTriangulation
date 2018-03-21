@@ -44,7 +44,9 @@ DelaunayManager::DelaunayManager(QWidget *parent) :
     mainWindow((cg3::viewer::MainWindow&)*parent),
     boundingBox(cg3::Point2Dd(-BOUNDINGBOX, -BOUNDINGBOX),
                 cg3::Point2Dd(BOUNDINGBOX, BOUNDINGBOX)),
-    triangulation()
+    boundingTriangle(BT_P1, BT_P2, BT_P3),
+    dag(boundingTriangle),
+    triangulation(&dag.getRootTriangle())
 {
     //UI setup
     ui->setupUi(this);
@@ -216,9 +218,7 @@ void DelaunayManager::on_loadPointsPushButton_clicked() {
 
         //Launch your triangulation algorithm here
         /****/
-        for(int i=0; i< points.size(); i++){
-            triangulation.insertVertex(points[i]);
-        }
+
         /****/
 
         t.stopAndPrint();
@@ -258,7 +258,7 @@ void DelaunayManager::point2DClicked(const cg3::Point2Dd& p) {
 
         //Manage here the insertion of the point inside the triangulation
         /******/
-        triangulation.insertVertex(p);
+        insertVertex(p, triangulation, dag);
         /******/
 
     }

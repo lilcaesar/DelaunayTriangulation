@@ -7,6 +7,10 @@ Triangle::Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3) : p_1(p
 
 }
 
+Triangle::Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3, int DAGIndex) : triangleDAGIndex(DAGIndex), p_1(p1), p_2(p2), p_3(p3){
+
+}
+
 cg3::Point2Dd Triangle::p1() const{
     return p_1;
 }
@@ -45,4 +49,12 @@ int Triangle::getTriangleTriangulationIndex() const{
 
 bool Triangle::isLeaf() const{
     return sons.empty();
+}
+
+void Triangle::setDAGIndex(int index){
+    triangleDAGIndex=index;
+}
+
+void Triangle::setTriangulationIndex(int index){
+    triangleTriangulationIndex = index;
 }

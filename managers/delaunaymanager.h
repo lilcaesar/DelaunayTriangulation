@@ -7,7 +7,9 @@
 
 #include <cg3/viewer/drawable_objects/2d/drawable_bounding_box2d.h>
 
+#include <dag.h>
 #include <drawabletriangulation.h>
+#include <algorithms.h>
 
 
 namespace Ui {
@@ -36,7 +38,10 @@ private:
     //It is const because, once defined and initialized, it will never change!
     const cg3::DrawableBoundingBox2D boundingBox;
 
+    Triangle boundingTriangle;
+    DAG dag;
     DrawableTriangulation triangulation;
+
 
     /* ----- Private methods ----- */
 
