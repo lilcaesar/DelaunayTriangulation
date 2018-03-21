@@ -8,7 +8,7 @@ DrawableTriangulation::DrawableTriangulation(): coloreLinee(), colorePunti(){
 
 void DrawableTriangulation::draw() const{
     for(int i = 0; i < triangles.size(); i++){
-        cg3::viewer::drawTriangle2D(triangles[i].p1(), triangles[i].p2(), triangles[i].p3(), coloreLinee);
+        cg3::viewer::drawTriangle2D(triangles[i]->p1(), triangles[i]->p2(), triangles[i]->p3(), coloreLinee);
     }
 }
 

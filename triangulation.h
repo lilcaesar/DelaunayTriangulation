@@ -14,7 +14,7 @@ public:
 
 protected:
     std::vector<cg3::Point2Dd> points;
-    std::vector<Triangle> triangles;
+    std::vector<Triangle*> triangles;
 };
 
 #endif // TRIANGULATION_H

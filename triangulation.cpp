@@ -6,8 +6,9 @@ Triangulation::Triangulation()
 }
 
 bool Triangulation::clearTriangulation(){
-    //RIFARE
-    if(triangles.empty()){
+    triangles.clear();
+    points.clear();
+    if(triangles.empty()&&points.empty()){
         return true;
     }
     return false;
@@ -15,5 +16,5 @@ bool Triangulation::clearTriangulation(){
 
 void Triangulation::insertVertex(const cg3::Point2Dd& point)
 {
-    //points.push_back(point);
+    points.push_back(point);
 }

@@ -7,12 +7,12 @@ class DAG
 {
 public:
     DAG();
-    Triangle* getRootTriangle();
-    void addNode(Triangle* newNode);
+    Triangle getRootTriangle() const;
+    void addNodes(int triangle,const cg3::Point2Dd& newPoint);
 
 private:
     int nTriangle;
-    std::vector<Triangle*> nodes;
+    std::vector<Triangle> nodes;
 };
 
 #endif // DAG_H
