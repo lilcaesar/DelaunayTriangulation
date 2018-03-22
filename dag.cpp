@@ -16,9 +16,9 @@ void DAG::addNodes(int triangle,const cg3::Point2Dd& newPoint){
     nodes.push_back(Triangle(newPoint, nodes[triangle].p1(), nodes[triangle].p2(), nTriangle-3));
     nodes.push_back(Triangle(newPoint, nodes[triangle].p2(), nodes[triangle].p3(), nTriangle-2));
     nodes.push_back(Triangle(newPoint, nodes[triangle].p3(), nodes[triangle].p1(), nTriangle-1));
-    nodes[triangle].addSon(&nodes[nTriangle-3]);
-    nodes[triangle].addSon(&nodes[nTriangle-2]);
-    nodes[triangle].addSon(&nodes[nTriangle-1]);
+    nodes[triangle].addSon(nTriangle-3);
+    nodes[triangle].addSon(nTriangle-2);
+    nodes[triangle].addSon(nTriangle-1);
 }
 
 Triangle& DAG::getTriangle(int index){

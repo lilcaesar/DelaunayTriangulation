@@ -2,24 +2,24 @@
 
 #include <cg3/core/cg3/geometry/2d/utils2d.h>
 
-int findTriangle(const cg3::Point2Dd& vertex,const Triangle& triangle){
+int findTriangle(const cg3::Point2Dd& vertex,const Triangle& triangle, DAG& graph){
     int finalTriangle;
     finalTriangle = triangle.getTriangleDAGIndex();
     if(!triangle.isLeaf()){
-        if(cg3::isPointLyingInTriangle(triangle.getSon1().p1(),
-                                       triangle.getSon1().p2(),
-                                       triangle.getSon1().p3(),
+        if(cg3::isPointLyingInTriangle(graph.getTriangle(triangle.getSon1()).p1(),
+                                       graph.getTriangle(triangle.getSon1()).p2(),
+                                       graph.getTriangle(triangle.getSon1()).p3(),
                                        vertex, true
                                        )){
-            finalTriangle = findTriangle(vertex, triangle.getSon1());
-        }else if(cg3::isPointLyingInTriangle(triangle.getSon2().p1(),
-                                             triangle.getSon2().p2(),
-                                             triangle.getSon2().p3(),
+            finalTriangle = findTriangle(vertex, graph.getTriangle(triangle.getSon1()), graph);
+        }else if(cg3::isPointLyingInTriangle(graph.getTriangle(triangle.getSon2()).p1(),
+                                             graph.getTriangle(triangle.getSon2()).p2(),
+                                             graph.getTriangle(triangle.getSon2()).p3(),
                                              vertex, true
                                              )){
-            finalTriangle = findTriangle(vertex, triangle.getSon2());
+            finalTriangle = findTriangle(vertex, graph.getTriangle(triangle.getSon2()), graph);
         }else{
-            finalTriangle = findTriangle(vertex, triangle.getSon3());
+            finalTriangle = findTriangle(vertex, graph.getTriangle(triangle.getSon3()), graph);
         }
     }
     return finalTriangle;
@@ -27,7 +27,7 @@ int findTriangle(const cg3::Point2Dd& vertex,const Triangle& triangle){
 
 void insertVertex(const cg3::Point2Dd& newVertex, Triangulation& triangulation, DAG& graph){
     int triangle;
-    triangle = findTriangle(newVertex, graph.getRootTriangle());
+    triangle = findTriangle(newVertex, graph.getRootTriangle(), graph);
     graph.addNodes(triangle, newVertex);
     triangulation.insertVertex(newVertex);
     triangulation.swap(graph.getTriangle(triangle).getTriangleTriangulationIndex(), &graph.getTriangle(graph.getNtriangles()-3));

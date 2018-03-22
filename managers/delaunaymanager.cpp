@@ -218,7 +218,9 @@ void DelaunayManager::on_loadPointsPushButton_clicked() {
 
         //Launch your triangulation algorithm here
         /****/
-
+        for(cg3::Point2Dd p : points){
+            insertVertex(p, triangulation, dag);
+        }
         /****/
 
         t.stopAndPrint();

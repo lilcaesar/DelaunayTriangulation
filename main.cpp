@@ -3,12 +3,6 @@
 
 int main(int argc, char *argv[]) {
 
-    for(int i = 10; i<100; i++){
-        std::cout << "2018_Unica@_user#_0" << i<< std::endl;
-    }
-    for(int i = 100; i<1000; i++){
-        std::cout << "2018_Unica@_user#_" << i<< std::endl;
-    }
     CG3_SUPPRESS_WARNING(argc);
     CG3_SUPPRESS_WARNING(argv);
 

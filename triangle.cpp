@@ -23,19 +23,19 @@ cg3::Point2Dd Triangle::p3() const{
     return p_3;
 }
 
-Triangle& Triangle::getSon1() const{
-    return *sons[0];
+int Triangle::getSon1() const{
+    return sons[0];
 }
 
-Triangle& Triangle::getSon2() const{
-    return *sons[1];
+int Triangle::getSon2() const{
+    return sons[1];
 }
 
-Triangle& Triangle::getSon3() const{
-    return *sons[2];
+int Triangle::getSon3() const{
+    return sons[2];
 }
 
-void Triangle::addSon(Triangle* son){
+void Triangle::addSon(int son){
     sons.push_back(son);
 }
 

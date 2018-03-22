@@ -13,10 +13,10 @@ public:
     cg3::Point2Dd p1() const;
     cg3::Point2Dd p2() const;
     cg3::Point2Dd p3() const;
-    Triangle& getSon1() const;
-    Triangle& getSon2() const;
-    Triangle& getSon3() const;
-    void addSon(Triangle* son);
+    int getSon1() const;
+    int getSon2() const;
+    int getSon3() const;
+    void addSon(int son);
     int getTriangleDAGIndex() const;
     int getTriangleTriangulationIndex() const;
     bool isLeaf() const;
@@ -29,8 +29,8 @@ private:
     const cg3::Point2Dd p_1;
     const cg3::Point2Dd p_2;
     const cg3::Point2Dd p_3;
-    std::vector<Triangle*> adjacencies;
-    std::vector<Triangle*> sons;
+    std::vector<int> adjacencies;
+    std::vector<int> sons;
 };
 
 #endif // TRIANGLE_H
