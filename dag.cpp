@@ -28,3 +28,7 @@ Triangle& DAG::getTriangle(int index){
 int DAG::getNtriangles() const{
     return nTriangle;
 }
+
+std::vector<Triangle>* DAG::getVector(){
+    return &nodes;
+}

@@ -8,7 +8,7 @@ class DrawableTriangulation : public Triangulation ,public cg3::DrawableObject{
 public:
     DrawableTriangulation();
 
-    DrawableTriangulation(Triangle* triangle);
+    DrawableTriangulation(Triangle* triangle, std::vector<Triangle>* trianglesVector);
 
     //DrawableObject interface methods
     void draw() const;

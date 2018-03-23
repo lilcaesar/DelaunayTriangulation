@@ -12,6 +12,7 @@ public:
     void addNodes(int triangle,const cg3::Point2Dd& newPoint);
     Triangle& getTriangle(int index);
     int getNtriangles() const;
+    std::vector<Triangle>* getVector();
 
 private:
     int nTriangle;

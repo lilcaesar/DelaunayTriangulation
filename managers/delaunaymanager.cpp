@@ -46,7 +46,7 @@ DelaunayManager::DelaunayManager(QWidget *parent) :
                 cg3::Point2Dd(BOUNDINGBOX, BOUNDINGBOX)),
     boundingTriangle(BT_P1, BT_P2, BT_P3),
     dag(boundingTriangle),
-    triangulation(&dag.getRootTriangle())
+    triangulation(&dag.getRootTriangle(), dag.getVector())
 {
     //UI setup
     ui->setupUi(this);
