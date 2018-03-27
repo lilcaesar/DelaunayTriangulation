@@ -10,6 +10,8 @@ public:
 
     DrawableTriangulation(Triangle* triangle, std::vector<Triangle>* trianglesVector);
 
+    ~DrawableTriangulation();
+
     //DrawableObject interface methods
     void draw() const;
     cg3::Pointd sceneCenter() const;

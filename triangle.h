@@ -10,6 +10,7 @@ public:
     Triangle();
     Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3);
     Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3, int DAGIndex);
+    ~Triangle();
     cg3::Point2Dd p1() const;
     cg3::Point2Dd p2() const;
     cg3::Point2Dd p3() const;

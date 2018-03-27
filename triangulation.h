@@ -8,6 +8,7 @@ class Triangulation
 public:
     Triangulation();
     Triangulation(Triangle* triangle, std::vector<Triangle> *trianglesVector);
+    ~Triangulation();
     bool clearTriangulation();
     void insertVertex(const cg3::Point2Dd& point);
     std::vector<cg3::Point2Dd*> getTriangleVertices(int triangleIndex);

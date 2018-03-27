@@ -11,13 +11,13 @@ Triangulation::Triangulation(Triangle *triangle, std::vector<Triangle> *triangle
     points.push_back(triangle->p3());
 }
 
+Triangulation::~Triangulation(){
+}
+
 bool Triangulation::clearTriangulation(){
     triangles.clear();
     points.clear();
-    if(triangles.empty()&&points.empty()){
-        return true;
-    }
-    return false;
+    return (triangles.empty()&&points.empty());
 }
 
 void Triangulation::insertVertex(const cg3::Point2Dd& point)

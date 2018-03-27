@@ -13,6 +13,8 @@
 #include <cg3/data_structures/arrays/arrays.h>
 #include <cg3/utilities/timer.h>
 
+#include<algorithm> //std::random_shuffle
+
 
 //Limits for the bounding box
 //It defines where points can be added
@@ -218,6 +220,8 @@ void DelaunayManager::on_loadPointsPushButton_clicked() {
 
         //Launch your triangulation algorithm here
         /****/
+
+        std::random_shuffle(points.begin(), points.end());
         for(cg3::Point2Dd p : points){
             insertVertex(p, triangulation, dag);
         }

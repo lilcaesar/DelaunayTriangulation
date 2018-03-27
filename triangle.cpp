@@ -11,6 +11,9 @@ Triangle::Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3, int DAG
 
 }
 
+Triangle::~Triangle(){
+}
+
 cg3::Point2Dd Triangle::p1() const{
     return p_1;
 }

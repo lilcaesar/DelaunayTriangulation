@@ -7,6 +7,9 @@ DAG::DAG(Triangle triangle): nTriangle(1){
     nodes.push_back(triangle);
 }
 
+DAG::~DAG(){
+}
+
 Triangle& DAG::getRootTriangle(){
     return nodes[0];
 }
@@ -31,4 +34,10 @@ int DAG::getNtriangles() const{
 
 std::vector<Triangle>* DAG::getVector(){
     return &nodes;
+}
+
+bool DAG::clearGraph()
+{
+    nodes.clear();
+    return nodes.empty();
 }
