@@ -46,7 +46,7 @@ DelaunayManager::DelaunayManager(QWidget *parent) :
     mainWindow((cg3::viewer::MainWindow&)*parent),
     boundingBox(cg3::Point2Dd(-BOUNDINGBOX, -BOUNDINGBOX),
                 cg3::Point2Dd(BOUNDINGBOX, BOUNDINGBOX)),
-    boundingTriangle(BT_P1, BT_P2, BT_P3),
+    boundingTriangle(BT_P1, BT_P2, BT_P3, -1, -1, -1),
     dag(boundingTriangle),
     triangulation(&dag.getRootTriangle(), dag.getVector())
 {

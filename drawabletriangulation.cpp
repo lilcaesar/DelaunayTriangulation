@@ -10,11 +10,8 @@ DrawableTriangulation::DrawableTriangulation(Triangle* triangle, std::vector<Tri
 
 }
 
-DrawableTriangulation::~DrawableTriangulation(){
-}
-
 void DrawableTriangulation::draw() const{
-    for(int i =0 ; i < triangles.size(); i++){
+    for(unsigned int i =0 ; i < triangles.size(); i++){
         cg3::viewer::drawTriangle2D((*DAGtriangles)[triangles[i]].p1(), (*DAGtriangles)[triangles[i]].p2(), (*DAGtriangles)[triangles[i]].p3(), coloreLinee, 1);
     }
 }

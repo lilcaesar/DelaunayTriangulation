@@ -16,7 +16,6 @@ public:
     void addTriangle(Triangle* triangle);
 
 protected:
-    int nTriangles;
     int nVertices;
     std::vector<cg3::Point2Dd> points;
     std::vector<int> triangles;

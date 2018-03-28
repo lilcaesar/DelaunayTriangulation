@@ -1,10 +1,10 @@
 #include "triangulation.h"
 
-Triangulation::Triangulation(): nTriangles(0){
+Triangulation::Triangulation(){
 
 }
 
-Triangulation::Triangulation(Triangle *triangle, std::vector<Triangle> *trianglesVector): nTriangles(1), DAGtriangles(trianglesVector){
+Triangulation::Triangulation(Triangle *triangle, std::vector<Triangle> *trianglesVector): DAGtriangles(trianglesVector){
     triangles.push_back(triangle->getTriangleDAGIndex());
     points.push_back(triangle->p1());
     points.push_back(triangle->p2());
@@ -31,7 +31,6 @@ void Triangulation::swap(int oldTriangleIndex, Triangle *newTriangle){
 }
 
 void Triangulation::addTriangle(Triangle *triangle){
-    triangle->setTriangulationIndex(nTriangles);
+    triangle->setTriangulationIndex(triangles.size());
     triangles.push_back(triangle->getTriangleDAGIndex());
-    nTriangles++;
 }
