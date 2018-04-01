@@ -18,7 +18,7 @@ Triangle::Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3, int DAG
 
 }
 
-Triangle::Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3, int DAGIndex, int adj1, int adj2, int adj3) : triangleDAGIndex(DAGIndex), p_1(p1), p_2(p2), p_3(p3){
+Triangle::Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3, int DAGIndex, int adj1, int adj2, int adj3, int oppAdj2) : triangleDAGIndex(DAGIndex), p_1(p1), p_2(p2), p_3(p3), adjOppositePoint2(oppAdj2){
     adjacencies.push_back(adj1);
     adjacencies.push_back(adj2);
     adjacencies.push_back(adj3);
@@ -70,6 +70,16 @@ void Triangle::addAdj(int child){
 
 void Triangle::setAdj(int oldValue, int newValue){
     std::replace(adjacencies.begin(), adjacencies.end(), oldValue, newValue);
+}
+
+void Triangle::setAdjOppositePoint2(int value)
+{
+    adjOppositePoint2 = value;
+}
+
+int Triangle::getAdjOppositePoint2() const
+{
+    return adjOppositePoint2;
 }
 
 int Triangle::getTriangleDAGIndex() const{

@@ -25,6 +25,21 @@ int findTriangle(const cg3::Point2Dd& vertex,const Triangle& triangle, DAG& grap
     return finalTriangle;
 }
 
+void legalizeEdge(Triangle *triangle, DAG &graph, Triangulation& triangulation){
+    /*The new inserted point is always in the first position and the index for the triangle adjacent to
+    the opposing segment therefore is the second (look at the Triangle class for further information)*/
+    if(cg3::isPointLyingInCircle(graph.getTriangle(triangle->getAdj2()).p1(),
+                                 graph.getTriangle(triangle->getAdj2()).p2(),
+                                 graph.getTriangle(triangle->getAdj2()).p3(),
+                                 triangle->p1(), true)){
+        graph.edgeFlip(triangle->getTriangleDAGIndex(), triangle->getAdj2());
+        triangulation.swap(triangle->getTriangleDAGIndex(), &graph.getTriangle(graph.getNtriangles()-2));
+        triangulation.swap(triangle->getAdj2(), &graph.getTriangle(graph.getNtriangles()-1));
+        legalizeEdge(&graph.getTriangle(graph.getNtriangles()-2), graph, triangulation);
+        legalizeEdge(&graph.getTriangle(graph.getNtriangles()-1), graph, triangulation);
+    }
+}
+
 void insertVertex(const cg3::Point2Dd& newVertex, Triangulation& triangulation, DAG& graph){
     int triangle;
     triangle = findTriangle(newVertex, graph.getRootTriangle(), graph);
@@ -33,4 +48,7 @@ void insertVertex(const cg3::Point2Dd& newVertex, Triangulation& triangulation, 
     triangulation.swap(graph.getTriangle(triangle).getTriangleTriangulationIndex(), &graph.getTriangle(graph.getNtriangles()-3));
     triangulation.addTriangle(&graph.getTriangle(graph.getNtriangles()-2));
     triangulation.addTriangle(&graph.getTriangle(graph.getNtriangles()-1));
+    legalizeEdge(&graph.getTriangle(graph.getNtriangles()-3), graph, triangulation);
+    legalizeEdge(&graph.getTriangle(graph.getNtriangles()-2), graph, triangulation);
+    legalizeEdge(&graph.getTriangle(graph.getNtriangles()-1), graph, triangulation);
 }

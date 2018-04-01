@@ -9,6 +9,7 @@ public:
     DAG();
     DAG(Triangle triangle);
     Triangle& getRootTriangle();
+    void edgeFlip(int triangle1, int triangle2);
     void addNodes(int triangle,const cg3::Point2Dd& newPoint);
     Triangle& getTriangle(int index);
     int getNtriangles() const;
