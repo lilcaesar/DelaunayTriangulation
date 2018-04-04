@@ -46,9 +46,9 @@ DelaunayManager::DelaunayManager(QWidget *parent) :
     mainWindow((cg3::viewer::MainWindow&)*parent),
     boundingBox(cg3::Point2Dd(-BOUNDINGBOX, -BOUNDINGBOX),
                 cg3::Point2Dd(BOUNDINGBOX, BOUNDINGBOX)),
-    boundingTriangle(BT_P1, BT_P2, BT_P3, -1, -1, -1),
+    boundingTriangle(BT_P1, BT_P2, BT_P3, -1, -1, -1, -1),
     dag(boundingTriangle),
-    triangulation(&dag.getRootTriangle(), dag.getVector())
+    triangulation(&dag.getRootTriangle(), &dag)
 {
     //UI setup
     ui->setupUi(this);
@@ -157,8 +157,7 @@ void DelaunayManager::on_clearPointsPushButton_clicked() {
 
     //Clear here your triangulation
     /******/
-    if(!triangulation.clearTriangulation())
-        std::cout << "Clear triangulation failed"<<std::endl;
+    triangulation.clearTriangulation();
     /******/
 
 

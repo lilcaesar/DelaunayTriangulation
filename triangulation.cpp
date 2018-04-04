@@ -4,20 +4,18 @@ Triangulation::Triangulation(){
 
 }
 
-Triangulation::Triangulation(Triangle *triangle, std::vector<Triangle> *trianglesVector): DAGtriangles(trianglesVector){
-    triangles.push_back(triangle->getTriangleDAGIndex());
-    points.push_back(triangle->p1());
-    points.push_back(triangle->p2());
-    points.push_back(triangle->p3());
+Triangulation::Triangulation(Triangle *triangle, DAG *graph): DAGtriangles(graph){
+    bounding1=triangle->p1();
+    bounding2=triangle->p2();
+    bounding3=triangle->p3();
+    triangulationTriangles.push_back(0);
+    triangle->setTriangulationIndex(0);
 }
 
-Triangulation::~Triangulation(){
-}
-
-bool Triangulation::clearTriangulation(){
-    triangles.clear();
+void Triangulation::clearTriangulation(){
+    triangulationTriangles.clear();
     points.clear();
-    return (triangles.empty()&&points.empty());
+    triangulationTriangles.push_back(0);
 }
 
 void Triangulation::insertVertex(const cg3::Point2Dd& point)
@@ -26,11 +24,11 @@ void Triangulation::insertVertex(const cg3::Point2Dd& point)
 }
 
 void Triangulation::swap(int oldTriangleIndex, Triangle *newTriangle){
-    triangles[oldTriangleIndex]= newTriangle->getTriangleDAGIndex();
-    (*DAGtriangles)[triangles[oldTriangleIndex]].setTriangulationIndex(oldTriangleIndex);
+    triangulationTriangles[oldTriangleIndex]= newTriangle->getTriangleDAGIndex();
+    newTriangle->setTriangulationIndex(oldTriangleIndex);
 }
 
 void Triangulation::addTriangle(Triangle *triangle){
-    triangle->setTriangulationIndex(triangles.size());
-    triangles.push_back(triangle->getTriangleDAGIndex());
+    triangle->setTriangulationIndex(triangulationTriangles.size());
+    triangulationTriangles.push_back(triangle->getTriangleDAGIndex());
 }

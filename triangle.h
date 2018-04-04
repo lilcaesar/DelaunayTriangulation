@@ -10,11 +10,14 @@ public:
     Triangle();
     Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3);
     Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3, int adj1, int adj2, int adj3);
+    //Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3, int adj1, int adj2, int adj3, int oppAdj2);
     Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3, int DAGIndex);
-    Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3, int DAGIndex, int adj1, int adj2, int adj3, int oppAdj2);
+    Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3, int DAGIndex, int adj1, int adj2, int adj3);
+    //Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3, int DAGIndex, int adj1, int adj2, int adj3, int oppAdj2);
     cg3::Point2Dd p1() const;
     cg3::Point2Dd p2() const;
     cg3::Point2Dd p3() const;
+    int getPointIndex(const cg3::Point2Dd point1, const cg3::Point2Dd point2);
     int getChild1() const;
     int getChild2() const;
     int getChild3() const;
@@ -24,8 +27,8 @@ public:
     int getAdj3() const;
     void addAdj(int child);
     void setAdj(int oldValue, int newValue);
-    void setAdjOppositePoint2(int value);
-    int getAdjOppositePoint2() const;
+    /*void setAdjOppositePoint2(int value);
+    int getAdjOppositePoint2() const;*/
     int getTriangleDAGIndex() const;
     int getTriangleTriangulationIndex() const;
     bool isLeaf() const;
@@ -46,7 +49,7 @@ private:
     //Index of the point of the second adjacent triangle opposite to the common edge
     //We store only the second because of the way we developed the triangle and dag
     //(we always know that for the first adjacet sìtriangle the index is 2 and for the third is 3)
-    int adjOppositePoint2;
+    //int adjOppositePoint2;
 
     std::vector<int> children;
 };

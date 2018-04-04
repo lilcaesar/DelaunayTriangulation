@@ -7,19 +7,20 @@ class Triangulation
 {
 public:
     Triangulation();
-    Triangulation(Triangle* triangle, std::vector<Triangle> *trianglesVector);
-    ~Triangulation();
-    bool clearTriangulation();
+    Triangulation(Triangle* triangle, DAG *graph);
+    void clearTriangulation();
     void insertVertex(const cg3::Point2Dd& point);
     std::vector<cg3::Point2Dd*> getTriangleVertices(int triangleIndex);
     void swap(int oldTriangleIndex, Triangle* newTriangle);
     void addTriangle(Triangle* triangle);
 
 protected:
-    int nVertices;
+    cg3::Point2Dd bounding1;
+    cg3::Point2Dd bounding2;
+    cg3::Point2Dd bounding3;
     std::vector<cg3::Point2Dd> points;
-    std::vector<int> triangles;
-    std::vector<Triangle> *DAGtriangles;
+    std::vector<int> triangulationTriangles;
+    DAG *DAGtriangles;
 };
 
 #endif // TRIANGULATION_H

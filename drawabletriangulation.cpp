@@ -6,13 +6,17 @@ DrawableTriangulation::DrawableTriangulation(): coloreLinee(), colorePunti(){
 
 }
 
-DrawableTriangulation::DrawableTriangulation(Triangle* triangle, std::vector<Triangle> *trianglesVector): Triangulation(triangle, trianglesVector), coloreLinee(), colorePunti(){
+DrawableTriangulation::DrawableTriangulation(Triangle* triangle, DAG *graph): Triangulation(triangle, graph), coloreLinee(), colorePunti(){
 
 }
 
 void DrawableTriangulation::draw() const{
-    for(unsigned int i =0 ; i < triangles.size(); i++){
-        cg3::viewer::drawTriangle2D((*DAGtriangles)[triangles[i]].p1(), (*DAGtriangles)[triangles[i]].p2(), (*DAGtriangles)[triangles[i]].p3(), coloreLinee, 1);
+    cg3::viewer::drawTriangle2D(bounding1, bounding2, bounding3, coloreLinee, 1);
+    for(unsigned int i =0 ; i < triangulationTriangles.size(); i++){
+        cg3::viewer::drawTriangle2D(DAGtriangles->getTriangle(triangulationTriangles[i]).p1(),
+                                    DAGtriangles->getTriangle(triangulationTriangles[i]).p2(),
+                                    DAGtriangles->getTriangle(triangulationTriangles[i]).p3(),
+                                    coloreLinee, 1);
     }
 }
 
