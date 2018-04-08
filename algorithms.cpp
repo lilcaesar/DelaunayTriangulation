@@ -50,7 +50,10 @@ void insertVertex(const cg3::Point2Dd& newVertex, Triangulation& triangulation, 
     triangulation.swap(graph.getTriangle(triangle).getTriangleTriangulationIndex(), &graph.getTriangle(graph.getNtriangles()-3));
     triangulation.addTriangle(&graph.getTriangle(graph.getNtriangles()-2));
     triangulation.addTriangle(&graph.getTriangle(graph.getNtriangles()-1));
-    legalizeEdge(&graph.getTriangle(graph.getNtriangles()-3), graph, triangulation);
-    legalizeEdge(&graph.getTriangle(graph.getNtriangles()-2), graph, triangulation);
-    legalizeEdge(&graph.getTriangle(graph.getNtriangles()-1), graph, triangulation);
+    //We need this variable since legalizeEdge could add triangles so we can't use the DAG method safely
+    int nTriangles=graph.getNtriangles();
+    legalizeEdge(&graph.getTriangle(nTriangles-3), graph, triangulation);
+    legalizeEdge(&graph.getTriangle(nTriangles-2), graph, triangulation);
+    legalizeEdge(&graph.getTriangle(nTriangles-1), graph, triangulation);
+    //
 }
