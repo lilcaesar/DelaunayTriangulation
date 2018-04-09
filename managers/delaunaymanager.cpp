@@ -295,6 +295,8 @@ void DelaunayManager::on_checkTriangulationPushButton_clicked() {
     //triangles.resize(n, 3), and then fill the matrix using the
     //assignment operator: triangles(i,j) = a;
     /****/
+    triangulation.getPoints(&points);
+    triangulation.getTriangles(&triangles);
 
     /****/
 

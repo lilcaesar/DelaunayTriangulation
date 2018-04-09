@@ -6,7 +6,6 @@
 
 class DrawableTriangulation : public Triangulation ,public cg3::DrawableObject{
 public:
-    DrawableTriangulation();
 
     DrawableTriangulation(Triangle* triangle, DAG *graph);
 
