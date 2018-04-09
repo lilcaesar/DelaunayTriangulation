@@ -20,23 +20,23 @@ void DAG::edgeFlip(int triangle1, int triangle2){
                                  nTriangle-2, nodes[triangle1].getAdj1(), nodes[triangle2].getAdj3(), nTriangle-1));
         nodes.push_back(Triangle(nodes[triangle1].p1(), nodes[triangle2].p1(), nodes[triangle2].p2(),
                                  nTriangle-1, nTriangle-2, nodes[triangle2].getAdj1(), nodes[triangle1].getAdj3()));
-        nodes[nodes[triangle2].getAdj1()].setAdj(triangle2, nTriangle-2);
-        nodes[nodes[triangle2].getAdj3()].setAdj(triangle2, nTriangle-1);
+        nodes[nodes[triangle2].getAdj1()].setAdj(triangle2, nTriangle-1);
+        nodes[nodes[triangle2].getAdj3()].setAdj(triangle2, nTriangle-2);
 
     }else if(oppositePointPosition==2){
         nodes.push_back(Triangle(nodes[triangle1].p1(), nodes[triangle1].p2(), nodes[triangle2].p2(),
                                  nTriangle-2, nodes[triangle1].getAdj1(), nodes[triangle2].getAdj1(), nTriangle-1));
         nodes.push_back(Triangle(nodes[triangle1].p1(), nodes[triangle2].p2(), nodes[triangle2].p3(),
                                  nTriangle-1, nTriangle-2, nodes[triangle2].getAdj2(), nodes[triangle1].getAdj3()));
-        nodes[nodes[triangle2].getAdj2()].setAdj(triangle2, nTriangle-2);
-        nodes[nodes[triangle2].getAdj1()].setAdj(triangle2, nTriangle-1);
+        nodes[nodes[triangle2].getAdj2()].setAdj(triangle2, nTriangle-1);
+        nodes[nodes[triangle2].getAdj1()].setAdj(triangle2, nTriangle-2);
     }else if(oppositePointPosition==3){
         nodes.push_back(Triangle(nodes[triangle1].p1(), nodes[triangle1].p2(), nodes[triangle2].p3(),
                                  nTriangle-2, nodes[triangle1].getAdj1(), nodes[triangle2].getAdj2(), nTriangle-1));
         nodes.push_back(Triangle(nodes[triangle1].p1(), nodes[triangle2].p3(), nodes[triangle2].p1(),
                                  nTriangle-1, nTriangle-2, nodes[triangle2].getAdj3(), nodes[triangle1].getAdj3()));
-        nodes[nodes[triangle2].getAdj3()].setAdj(triangle2, nTriangle-2);
-        nodes[nodes[triangle2].getAdj2()].setAdj(triangle2, nTriangle-1);
+        nodes[nodes[triangle2].getAdj3()].setAdj(triangle2, nTriangle-1);
+        nodes[nodes[triangle2].getAdj2()].setAdj(triangle2, nTriangle-2);
     }
 
     nodes[nodes[triangle1].getAdj1()].setAdj(triangle1, nTriangle-2);
