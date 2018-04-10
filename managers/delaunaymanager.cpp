@@ -46,8 +46,7 @@ DelaunayManager::DelaunayManager(QWidget *parent) :
     mainWindow((cg3::viewer::MainWindow&)*parent),
     boundingBox(cg3::Point2Dd(-BOUNDINGBOX, -BOUNDINGBOX),
                 cg3::Point2Dd(BOUNDINGBOX, BOUNDINGBOX)),
-    boundingTriangle(BT_P1, BT_P2, BT_P3, -1, -1, -1, -1),
-    dag(boundingTriangle),
+    dag(BT_P1, BT_P2, BT_P3),
     triangulation(&dag.getRootTriangle(), &dag)
 {
     //UI setup
@@ -186,8 +185,9 @@ void DelaunayManager::on_showBoundingTriangleCheckBox_stateChanged(int arg1) {
     //If arg1 is Qt::Checked, then you must set the drawable triangulation
     //to draw the bounding triangle as well
     /******/
+    triangulation.setDrawBounding(false);
     if (arg1 == Qt::Checked) {
-
+        triangulation.setDrawBounding(true);
     }
 
     /******/
@@ -295,9 +295,14 @@ void DelaunayManager::on_checkTriangulationPushButton_clicked() {
     //triangles.resize(n, 3), and then fill the matrix using the
     //assignment operator: triangles(i,j) = a;
     /****/
-    triangulation.getPoints(&points);
-    triangulation.getTriangles(&triangles);
-
+    points=dag.getPoints();
+    std::vector<int> indices = triangulation.getTriangles();
+    triangles.resize(indices.size(),3);
+    for(unsigned int i=0; i < indices.size(); i++){
+        triangles(i,0)=dag.getTriangle(indices[i]).p1();
+        triangles(i,1)=dag.getTriangle(indices[i]).p2();
+        triangles(i,2)=dag.getTriangle(indices[i]).p3();
+    }
     /****/
 
     if (points.size() > 0) {

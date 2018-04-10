@@ -2,9 +2,13 @@
 
 DAG::DAG(): nTriangle(0){
 }
-DAG::DAG(Triangle triangle): nTriangle(1){
-    triangle.setDAGIndex(0);
-    nodes.push_back(triangle);
+DAG::DAG(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3): bounding1(p1), bounding2(p2), bounding3(p3), nPoints(3), nTriangle(1){
+    points.push_back(p1);
+    points.push_back(p2);
+    points.push_back(p3);
+    nodes.push_back(Triangle(0,1,2,-1,-1,-1,-1));
+    nodes[0].setDAGIndex(0);
+    nodes[0].setTriangulationIndex(0);
 }
 
 Triangle& DAG::getRootTriangle(){
@@ -49,6 +53,8 @@ void DAG::edgeFlip(int triangle1, int triangle2){
 }
 
 void DAG::addNodes(int triangle,const cg3::Point2Dd& newPoint){
+    points.push_back(newPoint);
+    nPoints++;
     nTriangle=nTriangle+3;
     //store the adjacency values of the father node in order to give them to the child and update all the relatives triangles
     int adj1=nodes[triangle].getAdj1();
@@ -57,28 +63,28 @@ void DAG::addNodes(int triangle,const cg3::Point2Dd& newPoint){
     //adj==-1 means outside the bounding triangle
     if(adj1>=0){
         nodes[adj1].setAdj(triangle, nTriangle-3);
-        nodes.push_back(Triangle(newPoint, nodes[triangle].p1(), nodes[triangle].p2(), nTriangle-3,
+        nodes.push_back(Triangle(nPoints-1, nodes[triangle].p1(), nodes[triangle].p2(), nTriangle-3,
                                  nTriangle-1, adj1, nTriangle-2));
     }else{
-        nodes.push_back(Triangle(newPoint, nodes[triangle].p1(), nodes[triangle].p2(), nTriangle-3,
+        nodes.push_back(Triangle(nPoints-1, nodes[triangle].p1(), nodes[triangle].p2(), nTriangle-3,
                                  nTriangle-1, adj1, nTriangle-2));
     }
 
     if(adj2>=0){
         nodes[adj2].setAdj(triangle, nTriangle-2);
-        nodes.push_back(Triangle(newPoint, nodes[triangle].p2(), nodes[triangle].p3(), nTriangle-2,
+        nodes.push_back(Triangle(nPoints-1, nodes[triangle].p2(), nodes[triangle].p3(), nTriangle-2,
                                  nTriangle-3, adj2, nTriangle-1));
     }else{
-        nodes.push_back(Triangle(newPoint, nodes[triangle].p2(), nodes[triangle].p3(), nTriangle-2,
+        nodes.push_back(Triangle(nPoints-1, nodes[triangle].p2(), nodes[triangle].p3(), nTriangle-2,
                                  nTriangle-3, adj2, nTriangle-1));
     }
 
     if(adj3>=0){
         nodes[adj3].setAdj(triangle, nTriangle-1);
-        nodes.push_back(Triangle(newPoint, nodes[triangle].p3(), nodes[triangle].p1(), nTriangle-1,
+        nodes.push_back(Triangle(nPoints-1, nodes[triangle].p3(), nodes[triangle].p1(), nTriangle-1,
                                  nTriangle-2, adj3, nTriangle-3));
     }else{
-        nodes.push_back(Triangle(newPoint, nodes[triangle].p3(), nodes[triangle].p1(), nTriangle-1,
+        nodes.push_back(Triangle(nPoints-1, nodes[triangle].p3(), nodes[triangle].p1(), nTriangle-1,
                                  nTriangle-2, adj3, nTriangle-3));
     }
 
@@ -89,6 +95,10 @@ void DAG::addNodes(int triangle,const cg3::Point2Dd& newPoint){
 
 Triangle& DAG::getTriangle(int index){
     return nodes[index];
+}
+
+cg3::Point2Dd &DAG::getPoint(int index){
+    return points[index];
 }
 
 int DAG::getNtriangles() const{
@@ -103,4 +113,12 @@ bool DAG::clearGraph()
 {
     nodes.clear();
     return nodes.empty();
+}
+
+std::vector<cg3::Point2Dd> DAG::getPoints(){
+    return points;
+}
+
+int DAG::getNPoints(){
+    return nPoints;
 }

@@ -13,10 +13,13 @@ public:
     void draw() const;
     cg3::Pointd sceneCenter() const;
     double sceneRadius() const;
+    void setDrawBounding(bool value);
+    bool getDrawBounding();
 
 private:
     QColor coloreLinee;
     QColor colorePunti;
+    bool drawBounding;
 };
 
 #endif // DRAWABLETRIANGULATION_H

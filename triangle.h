@@ -7,15 +7,14 @@
 class Triangle
 {
 public:
-    Triangle();
-    Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3);
-    Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3, int adj1, int adj2, int adj3);
-    Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3, int DAGIndex);
-    Triangle(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3, int DAGIndex, int adj1, int adj2, int adj3);
-    cg3::Point2Dd p1() const;
-    cg3::Point2Dd p2() const;
-    cg3::Point2Dd p3() const;
-    int getPointIndex(const cg3::Point2Dd point1, const cg3::Point2Dd point2);
+    Triangle(int p1, int p2, int p3);
+    Triangle(int p1, int p2, int p3, int adj1, int adj2, int adj3);
+    Triangle(int p1, int p2, int p3, int DAGIndex);
+    Triangle(int p1, int p2, int p3, int DAGIndex, int adj1, int adj2, int adj3);
+    int p1() const;
+    int p2() const;
+    int p3() const;
+    int getPointIndex(const int point1, const int point2);
     int getChild1() const;
     int getChild2() const;
     int getChild3() const;
@@ -35,9 +34,9 @@ private:
     int triangleDAGIndex;
     int triangleTriangulationIndex;
 
-    const cg3::Point2Dd p_1;
-    const cg3::Point2Dd p_2;
-    const cg3::Point2Dd p_3;
+    const int p_1;
+    const int p_2;
+    const int p_3;
 
     //adj1 is related to p_1-p_2, adj2 to p_2-p_3 and adj3 to p_3-p_1
     std::vector<int> adjacencies;

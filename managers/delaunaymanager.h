@@ -38,7 +38,6 @@ private:
     //It is const because, once defined and initialized, it will never change!
     const cg3::DrawableBoundingBox2D boundingBox;
 
-    Triangle boundingTriangle;
     DAG dag;
     DrawableTriangulation triangulation;
 

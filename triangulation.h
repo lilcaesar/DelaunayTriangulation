@@ -11,16 +11,11 @@ public:
     void clearTriangulation();
     void insertVertex(const cg3::Point2Dd& point);
     std::vector<cg3::Point2Dd*> getTriangleVertices(int triangleIndex);
-    void swap(int oldTriangleIndex, Triangle* newTriangle);
-    void addTriangle(Triangle* triangle);
-    void getPoints(std::vector<cg3::Point2Dd>* checkerArray);
-    void getTriangles(cg3::Array2D<unsigned int>* checkerArray);
+    void swap(int oldTriangleIndex, int newTriangle);
+    void addTriangle(int triangle);
+    std::vector<int> getTriangles();
 
 protected:
-    cg3::Point2Dd bounding1;
-    cg3::Point2Dd bounding2;
-    cg3::Point2Dd bounding3;
-    std::vector<cg3::Point2Dd> points;
     std::vector<int> triangulationTriangles;
     DAG *DAGtriangles;
 };
