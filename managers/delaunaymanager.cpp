@@ -157,6 +157,7 @@ void DelaunayManager::on_clearPointsPushButton_clicked() {
     //Clear here your triangulation
     /******/
     triangulation.clearTriangulation();
+    dag.clearGraph();
     /******/
 
 
@@ -212,6 +213,7 @@ void DelaunayManager::on_loadPointsPushButton_clicked() {
         //Clear here your triangulation
         /******/
         triangulation.clearTriangulation();
+        dag.clearGraph();
         /******/
 
         std::vector<cg3::Point2Dd> points = FileUtils::getPointsFromFile(filename.toStdString());

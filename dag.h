@@ -15,7 +15,7 @@ public:
     cg3::Point2Dd& getPoint(int index);
     int getNtriangles() const;
     std::vector<Triangle>* getVector();
-    bool clearGraph();
+    void clearGraph();
     std::vector<cg3::Point2Dd> getPoints();
     int getNPoints();
 

@@ -109,10 +109,18 @@ std::vector<Triangle>* DAG::getVector(){
     return &nodes;
 }
 
-bool DAG::clearGraph()
-{
+void DAG::clearGraph(){
     nodes.clear();
-    return nodes.empty();
+    points.clear();
+    nTriangle=1;
+    nPoints=3;
+    points.push_back(bounding1);
+    points.push_back(bounding2);
+    points.push_back(bounding3);
+    nodes.push_back(Triangle(0,1,2,-1,-1,-1,-1));
+    nodes[0].setDAGIndex(0);
+    nodes[0].setTriangulationIndex(0);
+
 }
 
 std::vector<cg3::Point2Dd> DAG::getPoints(){
