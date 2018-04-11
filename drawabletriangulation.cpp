@@ -2,7 +2,7 @@
 
 #include <cg3/viewer/renderable_objects/2d/renderable_objects2d.h>
 
-DrawableTriangulation::DrawableTriangulation(Triangle* triangle, DAG *graph): Triangulation(triangle, graph), coloreLinee(), colorePunti(), drawBounding(true){
+DrawableTriangulation::DrawableTriangulation(Triangle* triangle, DAG *graph): Triangulation(triangle, graph), coloreLinee(), colorePunti(), drawBounding(false){
 
 }
 
@@ -14,7 +14,10 @@ void DrawableTriangulation::draw() const{
                                         DAGtriangles->getPoint(DAGtriangles->getTriangle(triangulationTriangles[i]).p3()),
                                         coloreLinee, 1);
         }else{
-            if(DAGtriangles->getTriangle(triangulationTriangles[i]).getAdj2()!=-1){
+            int currentTriangle=triangulationTriangles[i];
+            if((DAGtriangles->getTriangle(currentTriangle).p1()>2)
+                    &&(DAGtriangles->getTriangle(currentTriangle).p2()>2)
+                    &&(DAGtriangles->getTriangle(currentTriangle).p3()>2)){
                 cg3::viewer::drawTriangle2D(DAGtriangles->getPoint(DAGtriangles->getTriangle(triangulationTriangles[i]).p1()),
                                             DAGtriangles->getPoint(DAGtriangles->getTriangle(triangulationTriangles[i]).p2()),
                                             DAGtriangles->getPoint(DAGtriangles->getTriangle(triangulationTriangles[i]).p3()),

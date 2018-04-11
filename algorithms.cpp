@@ -34,14 +34,12 @@ void legalizeEdge(int triangle, DAG &graph, Triangulation& triangulation){
                                      graph.getPoint(graph.getTriangle(graph.getTriangle(triangle).getAdj2()).p2()),
                                      graph.getPoint(graph.getTriangle(graph.getTriangle(triangle).getAdj2()).p3()),
                                      graph.getPoint(graph.getTriangle(triangle).p1()), true)){
-            if(graph.getTriangle(graph.getTriangle(triangle).getAdj2()).getAdj2()!=-1){
-                graph.edgeFlip(graph.getTriangle(triangle).getTriangleDAGIndex(), graph.getTriangle(triangle).getAdj2());
-                triangulation.swap(graph.getTriangle(triangle).getTriangleTriangulationIndex(), graph.getNtriangles()-2);
-                triangulation.swap(graph.getTriangle(graph.getTriangle(triangle).getAdj2()).getTriangleTriangulationIndex(), graph.getNtriangles()-1);
-                int nTriangles = graph.getNtriangles();
-                legalizeEdge(nTriangles-2, graph, triangulation);
-                legalizeEdge(nTriangles-1, graph, triangulation);
-            }
+            graph.edgeFlip(graph.getTriangle(triangle).getTriangleDAGIndex(), graph.getTriangle(triangle).getAdj2());
+            triangulation.swap(graph.getTriangle(triangle).getTriangleTriangulationIndex(), graph.getNtriangles()-2);
+            triangulation.swap(graph.getTriangle(graph.getTriangle(triangle).getAdj2()).getTriangleTriangulationIndex(), graph.getNtriangles()-1);
+            int nTriangles = graph.getNtriangles();
+            legalizeEdge(nTriangles-2, graph, triangulation);
+            legalizeEdge(nTriangles-1, graph, triangulation);
         }
     }
 }
