@@ -14,12 +14,13 @@ public:
     cg3::Pointd sceneCenter() const;
     double sceneRadius() const;
     void setDrawBounding(bool value);
-    bool getDrawBounding();
+    void setDrawVoronoi(bool value);
 
 private:
     QColor coloreLinee;
     QColor colorePunti;
     bool drawBounding;
+    bool drawVoronoi;
 };
 
 #endif // DRAWABLETRIANGULATION_H

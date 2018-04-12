@@ -339,3 +339,15 @@ void DelaunayManager::on_generatePointsFilePushButton_clicked() {
         FileUtils::generateRandomPointFile(filename.toStdString(), BOUNDINGBOX, number);
     }
 }
+
+void DelaunayManager::on_voronoiDiagramPushButton_clicked(){
+    triangulation.computeVoronoiPoints();
+    triangulation.setDrawVoronoi(true);
+    mainWindow.updateGlCanvas();
+}
+
+void DelaunayManager::on_clearVoronoiDiagramPushButton_clicked(){
+    triangulation.clearVoronoi();
+    triangulation.setDrawVoronoi(false);
+    mainWindow.updateGlCanvas();
+}

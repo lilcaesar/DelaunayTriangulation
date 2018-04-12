@@ -2,7 +2,7 @@
 
 #include <cg3/viewer/renderable_objects/2d/renderable_objects2d.h>
 
-DrawableTriangulation::DrawableTriangulation(Triangle* triangle, DAG *graph): Triangulation(triangle, graph), coloreLinee(), colorePunti(), drawBounding(false){
+DrawableTriangulation::DrawableTriangulation(Triangle* triangle, DAG *graph): Triangulation(triangle, graph), coloreLinee(), colorePunti(), drawBounding(false), drawVoronoi(false){
 
 }
 
@@ -25,6 +25,11 @@ void DrawableTriangulation::draw() const{
             }
         }
     }
+    if(drawVoronoi){
+        for(unsigned int i=0; i<voronoiEdges.size(); i=i+2){
+            cg3::viewer::drawLine2D(voronoiEdges[i], voronoiEdges[i+1], QColor(255,0,0),1);
+        }
+    }
 }
 
 cg3::Pointd DrawableTriangulation::sceneCenter() const{
@@ -39,7 +44,7 @@ void DrawableTriangulation::setDrawBounding(bool value){
     drawBounding=value;
 }
 
-bool DrawableTriangulation::getDrawBounding(){
-    return drawBounding;
+void DrawableTriangulation::setDrawVoronoi(bool value){
+    drawVoronoi=value;
 }
 

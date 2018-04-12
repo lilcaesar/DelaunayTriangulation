@@ -56,5 +56,4 @@ void insertVertex(const cg3::Point2Dd& newVertex, Triangulation& triangulation, 
     legalizeEdge(nTriangles-3, graph, triangulation);
     legalizeEdge(nTriangles-2, graph, triangulation);
     legalizeEdge(nTriangles-1, graph, triangulation);
-    //
 }
