@@ -9,9 +9,9 @@ public:
     DAG();
     DAG(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3);
     Triangle& getRootTriangle();
-    void edgeFlip(int triangle1, int triangle2);
-    void addNodes(int triangle,const cg3::Point2Dd& newPoint);
+    void addNode(Triangle newNode);
     Triangle& getTriangle(int index);
+    void addPoint(const cg3::Point2Dd& newPoint);
     cg3::Point2Dd& getPoint(int index);
     int getNtriangles() const;
     std::vector<Triangle>* getVector();
