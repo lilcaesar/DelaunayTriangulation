@@ -20,30 +20,33 @@ void DAG::addNode(Triangle newNode){
     nTriangle++;
 }
 
-Triangle& DAG::getTriangle(int index){
-    return nodes[index];
-}
-
 void DAG::addPoint(const cg3::Point2Dd& newPoint){
     points.push_back(newPoint);
     nPoints++;
 }
 
-cg3::Point2Dd &DAG::getPoint(int index){
-    return points[index];
+void DAG::changeTriangleAdj(int triangle, int oldValue, int newValue){
+    nodes[triangle].setAdj(oldValue, newValue);
+}
+
+void DAG::addTriangleChild(int triangle, int child){
+    nodes[triangle].addChild(child);
+}
+
+void DAG::setTriangleTriangulationIndex(int triangle, int index){
+    nodes[triangle].setTriangulationIndex(index);
 }
 
 int DAG::getNtriangles() const{
     return nTriangle;
 }
 
-std::vector<Triangle>* DAG::getVector(){
-    return &nodes;
-}
-
 void DAG::clearGraph(){
     nodes.clear();
     points.clear();
+}
+
+void DAG::initializeBounding(){
     nTriangle=1;
     nPoints=3;
     points.push_back(bounding1);
@@ -52,13 +55,12 @@ void DAG::clearGraph(){
     nodes.push_back(Triangle(0,1,2,-1,-1,-1,-1));
     nodes[0].setDAGIndex(0);
     nodes[0].setTriangulationIndex(0);
-
 }
 
-std::vector<cg3::Point2Dd> DAG::getPoints(){
+std::vector<cg3::Point2Dd> DAG::getPoints() const{
     return points;
 }
 
-int DAG::getNPoints(){
+int DAG::getNPoints() const{
     return nPoints;
 }

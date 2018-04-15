@@ -9,13 +9,14 @@ class Triangulation
 public:
     Triangulation(Triangle* triangle, DAG *graph);
     void clearTriangulation();
+    void initializeBounding();
     void insertVertex(const cg3::Point2Dd& point);
     std::vector<cg3::Point2Dd*> getTriangleVertices(int triangleIndex);
     void swap(int oldTriangleIndex, int newTriangle);
-    void addTriangle(int triangle);
-    std::vector<int> getTriangles();
-    void computeBisector(cg3::Point2Dd &p1, cg3::Point2Dd &p2, double &a, double &b, double &c);
-    cg3::Point2Dd computeCircumcenter(int Triangle);
+    void addTriangle(const Triangle &triangle);
+    std::vector<int> getTriangles() const;
+    void computeBisector(const cg3::Point2Dd &p1, const cg3::Point2Dd &p2, double &a, double &b, double &c) const;
+    cg3::Point2Dd computeCircumcenter(int Triangle) const;
     void computeVoronoiPoints();
     void clearVoronoi();
 

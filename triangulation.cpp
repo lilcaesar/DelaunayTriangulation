@@ -7,24 +7,27 @@ Triangulation::Triangulation(Triangle *triangle, DAG *graph): DAGtriangles(graph
 
 void Triangulation::clearTriangulation(){
     triangulationTriangles.clear();
+}
+
+void Triangulation::initializeBounding(){
     triangulationTriangles.push_back(0);
 }
 
 void Triangulation::swap(int oldTriangleIndex, int newTriangle){
     triangulationTriangles[oldTriangleIndex]= newTriangle;
-    DAGtriangles->getTriangle(newTriangle).setTriangulationIndex(oldTriangleIndex);
+    DAGtriangles->setTriangleTriangulationIndex(newTriangle, oldTriangleIndex);
 }
 
-void Triangulation::addTriangle(int triangle){
-    DAGtriangles->getTriangle(triangle).setTriangulationIndex(triangulationTriangles.size());
-    triangulationTriangles.push_back(triangle);
+void Triangulation::addTriangle(const Triangle &triangle){
+    DAGtriangles->setTriangleTriangulationIndex(triangle.getTriangleDAGIndex(), triangulationTriangles.size());
+    triangulationTriangles.push_back(triangle.getTriangleDAGIndex());
 }
 
-std::vector<int> Triangulation::getTriangles(){
+std::vector<int> Triangulation::getTriangles() const{
     return triangulationTriangles;
 }
 
-void Triangulation::computeBisector(cg3::Point2Dd &p1, cg3::Point2Dd &p2, double &a, double &b, double &c){
+void Triangulation::computeBisector(const cg3::Point2Dd &p1,  const cg3::Point2Dd &p2, double &a, double &b, double &c) const{
     //First compute the equation of the line passing through p1 and p2
     a=p2.y()-p1.y();
     b=p1.x()-p2.x();
@@ -38,7 +41,7 @@ void Triangulation::computeBisector(cg3::Point2Dd &p1, cg3::Point2Dd &p2, double
     b=aux;
 }
 
-cg3::Point2Dd Triangulation::computeCircumcenter(int Triangle){
+cg3::Point2Dd Triangulation::computeCircumcenter(int Triangle) const{
     //The circumcenter is the point where all the bisectors intersect
     //in our case the intersection of two bisectors is enough
     double a1,b1,c1,a2,b2,c2;

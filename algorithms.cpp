@@ -3,7 +3,7 @@
 #include <Eigen/Geometry>
 #include <cg3/core/cg3/geometry/2d/utils2d.h>
 
-int findTriangle(const cg3::Point2Dd& vertex,const Triangle& triangle, DAG& graph){
+int findTriangle(const cg3::Point2Dd& vertex,const Triangle& triangle,const DAG& graph){
     int finalTriangle;
     finalTriangle = triangle.getTriangleDAGIndex();
     if(!triangle.isLeaf()){
@@ -36,10 +36,10 @@ void edgeFlip(int triangle1, int triangle2, DAG &graph){
         graph.addNode(Triangle(graph.getTriangle(triangle1).p1(), graph.getTriangle(triangle2).p1(), graph.getTriangle(triangle2).p2(),
                                  nTriangle-1, nTriangle-2, graph.getTriangle(triangle2).getAdj1(), graph.getTriangle(triangle1).getAdj3()));
         if(graph.getTriangle(triangle2).getAdj1()!=-1){
-            graph.getTriangle(graph.getTriangle(triangle2).getAdj1()).setAdj(triangle2, nTriangle-1);
+            graph.changeTriangleAdj(graph.getTriangle(triangle2).getAdj1(), triangle2, nTriangle-1);
         }
         if(graph.getTriangle(triangle2).getAdj3()!=-1){
-            graph.getTriangle(graph.getTriangle(triangle2).getAdj3()).setAdj(triangle2, nTriangle-2);
+            graph.changeTriangleAdj(graph.getTriangle(triangle2).getAdj3(), triangle2, nTriangle-2);
         }
 
     }else if(oppositePointPosition==2){
@@ -48,10 +48,10 @@ void edgeFlip(int triangle1, int triangle2, DAG &graph){
         graph.addNode(Triangle(graph.getTriangle(triangle1).p1(), graph.getTriangle(triangle2).p2(), graph.getTriangle(triangle2).p3(),
                                  nTriangle-1, nTriangle-2, graph.getTriangle(triangle2).getAdj2(), graph.getTriangle(triangle1).getAdj3()));
         if(graph.getTriangle(triangle2).getAdj2()!=-1){
-            graph.getTriangle(graph.getTriangle(triangle2).getAdj2()).setAdj(triangle2, nTriangle-1);
+            graph.changeTriangleAdj(graph.getTriangle(triangle2).getAdj2(), triangle2, nTriangle-1);
         }
         if(graph.getTriangle(triangle2).getAdj1()!=-1){
-            graph.getTriangle(graph.getTriangle(triangle2).getAdj1()).setAdj(triangle2, nTriangle-2);
+            graph.changeTriangleAdj(graph.getTriangle(triangle2).getAdj1(), triangle2, nTriangle-2);
         }
     }else if(oppositePointPosition==3){
         graph.addNode(Triangle(graph.getTriangle(triangle1).p1(), graph.getTriangle(triangle1).p2(), graph.getTriangle(triangle2).p3(),
@@ -59,20 +59,20 @@ void edgeFlip(int triangle1, int triangle2, DAG &graph){
         graph.addNode(Triangle(graph.getTriangle(triangle1).p1(), graph.getTriangle(triangle2).p3(), graph.getTriangle(triangle2).p1(),
                                  nTriangle-1, nTriangle-2, graph.getTriangle(triangle2).getAdj3(), graph.getTriangle(triangle1).getAdj3()));
         if(graph.getTriangle(triangle2).getAdj3()!=-1){
-            graph.getTriangle(graph.getTriangle(triangle2).getAdj3()).setAdj(triangle2, nTriangle-1);
+            graph.changeTriangleAdj(graph.getTriangle(triangle2).getAdj3(), triangle2, nTriangle-1);
         }
         if(graph.getTriangle(triangle2).getAdj2()!=-1){
-            graph.getTriangle(graph.getTriangle(triangle2).getAdj2()).setAdj(triangle2, nTriangle-2);
+            graph.changeTriangleAdj(graph.getTriangle(triangle2).getAdj2(), triangle2, nTriangle-2);
         }
     }
 
-    graph.getTriangle(graph.getTriangle(triangle1).getAdj1()).setAdj(triangle1, nTriangle-2);
-    graph.getTriangle(graph.getTriangle(triangle1).getAdj3()).setAdj(triangle1, nTriangle-1);
+    graph.changeTriangleAdj(graph.getTriangle(triangle1).getAdj1(), triangle1, nTriangle-2);
+    graph.changeTriangleAdj(graph.getTriangle(triangle1).getAdj3(), triangle1, nTriangle-1);
 
-    graph.getTriangle(triangle1).addChild(nTriangle-2);
-    graph.getTriangle(triangle1).addChild(nTriangle-1);
-    graph.getTriangle(triangle2).addChild(nTriangle-2);
-    graph.getTriangle(triangle2).addChild(nTriangle-1);
+    graph.addTriangleChild(triangle1, nTriangle-2);
+    graph.addTriangleChild(triangle1, nTriangle-1);
+    graph.addTriangleChild(triangle2, nTriangle-2);
+    graph.addTriangleChild(triangle2, nTriangle-1);
 }
 
 void legalizeEdge(int triangle, DAG &graph, Triangulation& triangulation){
@@ -105,7 +105,7 @@ void addNodes(int triangle,const cg3::Point2Dd& newPoint, DAG& graph){
     if(adj1>=0){
         graph.addNode(Triangle(nPoints-1, graph.getTriangle(triangle).p1(), graph.getTriangle(triangle).p2(), nTriangles-3,
                                nTriangles-1, adj1, nTriangles-2));
-        graph.getTriangle(adj1).setAdj(triangle, nTriangles-3);
+        graph.changeTriangleAdj(adj1, triangle, nTriangles-3);
     }else{
         graph.addNode(Triangle(nPoints-1, graph.getTriangle(triangle).p1(), graph.getTriangle(triangle).p2(), nTriangles-3,
                                nTriangles-1, adj1, nTriangles-2));
@@ -114,7 +114,7 @@ void addNodes(int triangle,const cg3::Point2Dd& newPoint, DAG& graph){
     if(adj2>=0){
         graph.addNode(Triangle(nPoints-1, graph.getTriangle(triangle).p2(), graph.getTriangle(triangle).p3(), nTriangles-2,
                                  nTriangles-3, adj2, nTriangles-1));
-        graph.getTriangle(adj2).setAdj(triangle, nTriangles-2);
+        graph.changeTriangleAdj(adj2, triangle, nTriangles-2);
     }else{
         graph.addNode(Triangle(nPoints-1, graph.getTriangle(triangle).p2(), graph.getTriangle(triangle).p3(), nTriangles-2,
                                  nTriangles-3, adj2, nTriangles-1));
@@ -123,24 +123,24 @@ void addNodes(int triangle,const cg3::Point2Dd& newPoint, DAG& graph){
     if(adj3>=0){
         graph.addNode(Triangle(nPoints-1, graph.getTriangle(triangle).p3(), graph.getTriangle(triangle).p1(), nTriangles-1,
                                  nTriangles-2, adj3, nTriangles-3));
-        graph.getTriangle(adj3).setAdj(triangle, nTriangles-1);
+        graph.changeTriangleAdj(adj3, triangle, nTriangles-1);
     }else{
         graph.addNode(Triangle(nPoints-1, graph.getTriangle(triangle).p3(), graph.getTriangle(triangle).p1(), nTriangles-1,
                                  nTriangles-2, adj3, nTriangles-3));
     }
 
-    graph.getTriangle(triangle).addChild(nTriangles-3);
-    graph.getTriangle(triangle).addChild(nTriangles-2);
-    graph.getTriangle(triangle).addChild(nTriangles-1);
+    graph.addTriangleChild(triangle, nTriangles-3);
+    graph.addTriangleChild(triangle, nTriangles-2);
+    graph.addTriangleChild(triangle, nTriangles-1);
 }
 
 void insertVertex(const cg3::Point2Dd& newVertex, Triangulation& triangulation, DAG& graph){
     int triangle;
     triangle = findTriangle(newVertex, graph.getRootTriangle(), graph);
     addNodes(triangle, newVertex, graph);
-    triangulation.swap(graph.getTriangle(triangle).getTriangleTriangulationIndex(), graph.getNtriangles()-3);
-    triangulation.addTriangle(graph.getNtriangles()-2);
-    triangulation.addTriangle(graph.getNtriangles()-1);
+    triangulation.swap(graph.getTriangle(triangle).getTriangleTriangulationIndex(),  graph.getNtriangles()-3);
+    triangulation.addTriangle(graph.getTriangle(graph.getNtriangles()-2));
+    triangulation.addTriangle(graph.getTriangle(graph.getNtriangles()-1));
     //We need this variable since legalizeEdge could add triangles so we can't use the DAG method safely
     int nTriangles=graph.getNtriangles();
     legalizeEdge(nTriangles-3, graph, triangulation);

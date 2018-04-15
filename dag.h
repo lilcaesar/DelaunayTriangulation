@@ -8,16 +8,25 @@ class DAG
 public:
     DAG();
     DAG(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3);
+
+    inline const Triangle &getTriangle(int index) const{
+        return nodes[index];
+    }
+    inline const cg3::Point2Dd &getPoint(int index) const{
+        return points[index];
+    }
+
     Triangle& getRootTriangle();
     void addNode(Triangle newNode);
-    Triangle& getTriangle(int index);
     void addPoint(const cg3::Point2Dd& newPoint);
-    cg3::Point2Dd& getPoint(int index);
+    void changeTriangleAdj(int triangle, int oldValue, int newValue);
+    void addTriangleChild(int triangle, int child);
+    void setTriangleTriangulationIndex(int triangle, int index);
     int getNtriangles() const;
-    std::vector<Triangle>* getVector();
     void clearGraph();
-    std::vector<cg3::Point2Dd> getPoints();
-    int getNPoints();
+    void initializeBounding();
+    std::vector<cg3::Point2Dd> getPoints() const;
+    int getNPoints() const;
 
 private:
     cg3::Point2Dd bounding1;

@@ -7,21 +7,46 @@
 class Triangle
 {
 public:
+
     Triangle(int p1, int p2, int p3);
     Triangle(int p1, int p2, int p3, int adj1, int adj2, int adj3);
     Triangle(int p1, int p2, int p3, int DAGIndex);
     Triangle(int p1, int p2, int p3, int DAGIndex, int adj1, int adj2, int adj3);
-    int p1() const;
-    int p2() const;
-    int p3() const;
-    int getPointIndex(const int point1, const int point2);
-    int getChild1() const;
-    int getChild2() const;
-    int getChild3() const;
+
+    inline int p1() const{
+        return p_1;
+    }
+    inline int p2() const{
+        return p_2;
+    }
+    inline int p3() const{
+        return p_3;
+    }
+
+    inline int getChild1() const{
+        return children[0];
+    }
+    inline int getChild2() const{
+        return children[1];
+    }
+    inline int getChild3() const{
+        return children[2];
+    }
+
+    inline int getAdj1() const{
+        return adjacencies[0];
+    }
+
+    inline int getAdj2() const{
+        return adjacencies[1];
+    }
+
+    inline int getAdj3() const{
+        return adjacencies[2];
+    }
+
+    int getPointIndex(const int point1, const int point2) const;
     void addChild(int child);
-    int getAdj1() const;
-    int getAdj2() const;
-    int getAdj3() const;
     void addAdj(int child);
     void setAdj(int oldValue, int newValue);
     int getTriangleDAGIndex() const;
