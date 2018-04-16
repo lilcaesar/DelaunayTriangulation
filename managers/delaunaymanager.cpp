@@ -344,12 +344,26 @@ void DelaunayManager::on_generatePointsFilePushButton_clicked() {
     }
 }
 
+/**
+ * @brief Generate Voronoi diagram handler.
+ *
+ * This button calls the triangulation methods
+ * in charge of computing and drawing the Voronoi diagram
+ * of the set of points on the canvas.
+ */
 void DelaunayManager::on_voronoiDiagramPushButton_clicked(){
     triangulation.computeVoronoiPoints();
     triangulation.setDrawVoronoi(true);
     mainWindow.updateGlCanvas();
 }
 
+/**
+ * @brief Clear Voronoi diagram handler.
+ *
+ * This button calls the triangulation methods
+ * in charge of clearing the Voronoi diagram data
+ * and stops the drawing linked to it.
+ */
 void DelaunayManager::on_clearVoronoiDiagramPushButton_clicked(){
     triangulation.clearVoronoi();
     triangulation.setDrawVoronoi(false);

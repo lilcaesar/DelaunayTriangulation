@@ -6,23 +6,25 @@
 int findTriangle(const cg3::Point2Dd& vertex,const Triangle& triangle,const DAG& graph){
     int finalTriangle;
     finalTriangle = triangle.getTriangleDAGIndex();
-    if(!triangle.isLeaf()){
-        if(cg3::isPointLyingInTriangle(graph.getPoint(graph.getTriangle(triangle.getChild1()).p1()),
-                                       graph.getPoint(graph.getTriangle(triangle.getChild1()).p2()),
-                                       graph.getPoint(graph.getTriangle(triangle.getChild1()).p3()),
+
+    while(!(graph.getTriangle(finalTriangle).isLeaf())){
+        if(cg3::isPointLyingInTriangle(graph.getPoint(graph.getTriangle(graph.getTriangle(finalTriangle).getChild1()).p1()),
+                                       graph.getPoint(graph.getTriangle(graph.getTriangle(finalTriangle).getChild1()).p2()),
+                                       graph.getPoint(graph.getTriangle(graph.getTriangle(finalTriangle).getChild1()).p3()),
                                        vertex, true
                                        )){
-            finalTriangle = findTriangle(vertex, graph.getTriangle(triangle.getChild1()), graph);
-        }else if(cg3::isPointLyingInTriangle(graph.getPoint(graph.getTriangle(triangle.getChild2()).p1()),
-                                             graph.getPoint(graph.getTriangle(triangle.getChild2()).p2()),
-                                             graph.getPoint(graph.getTriangle(triangle.getChild2()).p3()),
+            finalTriangle = graph.getTriangle(finalTriangle).getChild1();
+        }else if(cg3::isPointLyingInTriangle(graph.getPoint(graph.getTriangle(graph.getTriangle(finalTriangle).getChild2()).p1()),
+                                             graph.getPoint(graph.getTriangle(graph.getTriangle(finalTriangle).getChild2()).p2()),
+                                             graph.getPoint(graph.getTriangle(graph.getTriangle(finalTriangle).getChild2()).p3()),
                                              vertex, true
                                              )){
-            finalTriangle = findTriangle(vertex, graph.getTriangle(triangle.getChild2()), graph);
+            finalTriangle = graph.getTriangle(finalTriangle).getChild2();
         }else{
-            finalTriangle = findTriangle(vertex, graph.getTriangle(triangle.getChild3()), graph);
+            finalTriangle = graph.getTriangle(finalTriangle).getChild3();
         }
     }
+
     return finalTriangle;
 }
 
