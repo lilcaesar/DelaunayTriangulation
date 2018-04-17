@@ -1,8 +1,7 @@
 #include "triangulation.h"
 
-Triangulation::Triangulation(Triangle *triangle, DAG *graph): DAGtriangles(graph){
+Triangulation::Triangulation(DAG *graph): DAGtriangles(graph){
     triangulationTriangles.push_back(0);
-    triangle->setTriangulationIndex(0);
 }
 
 void Triangulation::clearTriangulation(){

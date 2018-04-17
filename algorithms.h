@@ -4,7 +4,7 @@
 #include <triangulation.h>
 #include <dag.h>
 
-int findTriangle(const cg3::Point2Dd& vertex,const Triangle* triangle, const DAG& graph);
+int findTriangle(const cg3::Point2Dd& vertex, const DAG& graph);
 void edgeFlip(int triangle1, int triangle2, DAG &graph);
 void legalizeEdge(int triangle, DAG& graph, Triangulation &triangulation);
 void addNodes(int triangle,const cg3::Point2Dd& newPoint, DAG& graph);

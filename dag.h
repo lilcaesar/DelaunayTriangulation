@@ -16,13 +16,16 @@ public:
         return points[index];
     }
 
-    Triangle& getRootTriangle();
+    inline int getNtriangles() const{
+        return nTriangle;
+    }
+
+    const Triangle &getRootTriangle();
     void addNode(Triangle newNode);
     void addPoint(const cg3::Point2Dd& newPoint);
     void changeTriangleAdj(int triangle, int oldValue, int newValue);
     void addTriangleChild(int triangle, int child);
     void setTriangleTriangulationIndex(int triangle, int index);
-    int getNtriangles() const;
     void clearGraph();
     void initializeBounding();
     std::vector<cg3::Point2Dd> getPoints() const;

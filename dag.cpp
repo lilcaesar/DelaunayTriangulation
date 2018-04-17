@@ -11,34 +11,43 @@ DAG::DAG(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3): bounding1(p1), b
     nodes[0].setTriangulationIndex(0);
 }
 
-Triangle& DAG::getRootTriangle(){
-    return nodes[0];
-}
-
+/**
+ * @brief Add new node.
+ */
 void DAG::addNode(Triangle newNode){
     nodes.push_back(newNode);
     nTriangle++;
 }
 
+/**
+ * @brief Add new point.
+ */
 void DAG::addPoint(const cg3::Point2Dd& newPoint){
     points.push_back(newPoint);
     nPoints++;
 }
 
+/**
+ * @brief Changes a specific adjacency of a triangle
+ *
+ * Given a triangle calls the setAdj method of the Triagle class
+ */
 void DAG::changeTriangleAdj(int triangle, int oldValue, int newValue){
     nodes[triangle].setAdj(oldValue, newValue);
 }
 
+/**
+ * @brief Add a child to a specific triangle
+ */
 void DAG::addTriangleChild(int triangle, int child){
     nodes[triangle].addChild(child);
 }
 
+/**
+ * @brief Set the triangulation index of a triangle
+ */
 void DAG::setTriangleTriangulationIndex(int triangle, int index){
     nodes[triangle].setTriangulationIndex(index);
-}
-
-int DAG::getNtriangles() const{
-    return nTriangle;
 }
 
 void DAG::clearGraph(){

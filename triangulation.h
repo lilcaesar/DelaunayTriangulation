@@ -7,7 +7,7 @@
 class Triangulation
 {
 public:
-    Triangulation(Triangle* triangle, DAG *graph);
+    Triangulation(DAG *graph);
     void clearTriangulation();
     void initializeBounding();
     void insertVertex(const cg3::Point2Dd& point);

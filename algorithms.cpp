@@ -3,24 +3,33 @@
 #include <Eigen/Geometry>
 #include <cg3/core/cg3/geometry/2d/utils2d.h>
 
-int findTriangle(const cg3::Point2Dd& vertex,const Triangle& triangle,const DAG& graph){
-    int finalTriangle;
-    finalTriangle = triangle.getTriangleDAGIndex();
+/**
+ * @brief Find triangle from point.
+ *
+ * This method finds the leaf triangle where the given
+ * point lies on.
+ */
+int findTriangle(const cg3::Point2Dd& vertex, const DAG& graph){
+    int finalTriangle=0;
 
     while(!(graph.getTriangle(finalTriangle).isLeaf())){
         if(cg3::isPointLyingInTriangle(graph.getPoint(graph.getTriangle(graph.getTriangle(finalTriangle).getChild1()).p1()),
                                        graph.getPoint(graph.getTriangle(graph.getTriangle(finalTriangle).getChild1()).p2()),
                                        graph.getPoint(graph.getTriangle(graph.getTriangle(finalTriangle).getChild1()).p3()),
                                        vertex, true
-                                       )){
+                                       ))
+        {
             finalTriangle = graph.getTriangle(finalTriangle).getChild1();
-        }else if(cg3::isPointLyingInTriangle(graph.getPoint(graph.getTriangle(graph.getTriangle(finalTriangle).getChild2()).p1()),
+        }
+        else if(cg3::isPointLyingInTriangle(graph.getPoint(graph.getTriangle(graph.getTriangle(finalTriangle).getChild2()).p1()),
                                              graph.getPoint(graph.getTriangle(graph.getTriangle(finalTriangle).getChild2()).p2()),
                                              graph.getPoint(graph.getTriangle(graph.getTriangle(finalTriangle).getChild2()).p3()),
                                              vertex, true
-                                             )){
+                                             ))
+        {
             finalTriangle = graph.getTriangle(finalTriangle).getChild2();
-        }else{
+        }
+        else{
             finalTriangle = graph.getTriangle(finalTriangle).getChild3();
         }
     }
@@ -28,6 +37,14 @@ int findTriangle(const cg3::Point2Dd& vertex,const Triangle& triangle,const DAG&
     return finalTriangle;
 }
 
+/**
+ * @brief Performs the edge flip of two adjacent triangles.
+ *
+ * This method creates two new nodes corrisponding to result of
+ * flipping the common edge of the two given triangle indices.
+ * Then it adds the new nodes to the list of children inside the
+ * original nodes.
+ */
 void edgeFlip(int triangle1, int triangle2, DAG &graph){
     int nTriangle= graph.getNtriangles()+2;
     int oppositePointPosition= graph.getTriangle(triangle2).getPointIndex(graph.getTriangle(triangle1).p2(),graph.getTriangle(triangle1).p3());
@@ -77,6 +94,15 @@ void edgeFlip(int triangle1, int triangle2, DAG &graph){
     graph.addTriangleChild(triangle2, nTriangle-1);
 }
 
+/**
+ * @brief Compute the legalization checking.
+ *
+ * The method checks if the first point of the triangle
+ * (which corresponds to the new vertex) is inside the
+ * circle built using the points of the adjacent triangle.
+ * If so the edgeFlip funtion is called and the triangulation
+ * is updated.
+ */
 void legalizeEdge(int triangle, DAG &graph, Triangulation& triangulation){
     /*The new inserted point is always in the first position and the index for the triangle adjacent to
     the opposing segment therefore is the second (look at the Triangle class for further information)*/
@@ -95,6 +121,13 @@ void legalizeEdge(int triangle, DAG &graph, Triangulation& triangulation){
     }
 }
 
+/**
+ * @brief Add new nodes to the DAG.
+ *
+ * The funcion take in input the new point and the leaf in which
+ * we want to create the new nodes. AddNodes modifies the DAG
+ * adding three new triangles as children of the given triangle.
+ */
 void addNodes(int triangle,const cg3::Point2Dd& newPoint, DAG& graph){
     graph.addPoint(newPoint);
     //store the adjacency values of the father node in order to give them to the child and update all the relatives triangles
@@ -136,9 +169,16 @@ void addNodes(int triangle,const cg3::Point2Dd& newPoint, DAG& graph){
     graph.addTriangleChild(triangle, nTriangles-1);
 }
 
+/**
+ * @brief Insert new vertex and derived nodes.
+ *
+ * This method handles the creation of all the new nodes
+ * and triangle of the DAG and the triangulation given
+ * a new vertex.
+ */
 void insertVertex(const cg3::Point2Dd& newVertex, Triangulation& triangulation, DAG& graph){
     int triangle;
-    triangle = findTriangle(newVertex, graph.getRootTriangle(), graph);
+    triangle = findTriangle(newVertex, graph);
     addNodes(triangle, newVertex, graph);
     triangulation.swap(graph.getTriangle(triangle).getTriangleTriangulationIndex(),  graph.getNtriangles()-3);
     triangulation.addTriangle(graph.getTriangle(graph.getNtriangles()-2));

@@ -2,7 +2,7 @@
 
 #include <cg3/viewer/renderable_objects/2d/renderable_objects2d.h>
 
-DrawableTriangulation::DrawableTriangulation(Triangle* triangle, DAG *graph): Triangulation(triangle, graph), coloreLinee(), colorePunti(), drawBounding(false), drawVoronoi(false){
+DrawableTriangulation::DrawableTriangulation(DAG *graph): Triangulation(graph), coloreLinee(), colorePunti(), drawBounding(false), drawVoronoi(false){
 
 }
 
