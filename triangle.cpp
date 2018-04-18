@@ -2,14 +2,14 @@
 #include <algorithm>
 
 /**
- * @brief Triangle constructor
- * @param p1: index of the first vertex in the points vector
- * @param p2: index of the second vertex in the points vector
- * @param p3: index of the third vertex in the points vector
- * @param DAGIndex: index of the triangle
- * @param adj1
- * @param adj2
- * @param adj3
+ * @brief Triangle constructor.
+ * @param p1: index of the first vertex in the points vector.
+ * @param p2: index of the second vertex in the points vector.
+ * @param p3: index of the third vertex in the points vector.
+ * @param DAGIndex: index of the triangle in the DAG.
+ * @param adj1: index of the first adjacent triangle.
+ * @param adj2: index of the second adjacent triangle.
+ * @param adj3: index of the third adjacent triangle.
  */
 Triangle::Triangle(int p1, int p2, int p3, int DAGIndex, int adj1, int adj2, int adj3) : triangleDAGIndex(DAGIndex), p_1(p1), p_2(p2), p_3(p3){
     adjacencies.push_back(adj1);
@@ -17,7 +17,13 @@ Triangle::Triangle(int p1, int p2, int p3, int DAGIndex, int adj1, int adj2, int
     adjacencies.push_back(adj3);
 }
 
-int Triangle::getPointIndex(const int point1, const int point2) const{
+/**
+ * @brief Get opposite point index given the vertices of one edge.
+ * @param point1: first vertex of the edge.
+ * @param point2: second vertex of the edge.
+ * @return index of the opposite edge.
+ */
+int Triangle::getOppositePointIndex(const int point1, const int point2) const{
     if((p_1==point1 && p_2==point2)||(p_2==point1 && p_1==point2))
         return 3;
     if((p_2==point1 && p_3==point2)||(p_3==point1 && p_2==point2))
@@ -27,34 +33,49 @@ int Triangle::getPointIndex(const int point1, const int point2) const{
     return -1;
 }
 
+/**
+ * @brief Add a new child to the triangle
+ * @param Index in the DAG of the child
+ */
 void Triangle::addChild(int child){
     children.push_back(child);
 }
 
-void Triangle::addAdj(int child){
-    adjacencies.push_back(child);
-}
-
-void Triangle::setAdj(int oldValue, int newValue){
+/**
+ * @brief Change one adjacency of the triangle.
+ * @param oldValue
+ * @param newValue
+ *
+ * Search and substitute the old value with the new value.
+ */
+void Triangle::changeAdj(int oldValue, int newValue){
     std::replace(adjacencies.begin(), adjacencies.end(), oldValue, newValue);
 }
 
+/**
+ * @brief Get the DAG index of the triangle.
+ */
 int Triangle::getTriangleDAGIndex() const{
     return triangleDAGIndex;
 }
 
+/**
+ * @brief Get the triangulation index of the triangle.
+ */
 int Triangle::getTriangleTriangulationIndex() const{
     return triangleTriangulationIndex;
 }
 
+/**
+ * @brief Return true if the triangle has no children.
+ */
 bool Triangle::isLeaf() const{
     return children.empty();
 }
 
-void Triangle::setDAGIndex(int index){
-    triangleDAGIndex=index;
-}
-
+/**
+ * @brief Set the index of the triangulation
+ */
 void Triangle::setTriangulationIndex(int index){
     triangleTriangulationIndex = index;
 }
