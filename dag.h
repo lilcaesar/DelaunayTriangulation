@@ -9,6 +9,11 @@ public:
     DAG();
     DAG(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3);
 
+    /**
+     * @brief Return a triangle.
+     *
+     * Given a triangle DAG index returns the triangle.
+     */
     inline const Triangle &getTriangle(int index) const{
         return nodes[index];
     }

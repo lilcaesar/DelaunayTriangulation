@@ -50,11 +50,21 @@ void DAG::setTriangleTriangulationIndex(int triangle, int index){
     nodes[triangle].setTriangulationIndex(index);
 }
 
+/**
+ * @brief Clear all the data of the class
+ */
 void DAG::clearGraph(){
     nodes.clear();
     points.clear();
 }
 
+/**
+ * @brief Initialize the data for the root node
+ *
+ * The root node is the triangle composed by the given bounding triangle
+ * so this method adds the vertices to the points vector and the initialized
+ * triangle to the nodes vector.
+ */
 void DAG::initializeBounding(){
     nTriangle=1;
     nPoints=3;
@@ -66,10 +76,16 @@ void DAG::initializeBounding(){
     nodes[0].setTriangulationIndex(0);
 }
 
+/**
+ * @brief Get Points vector.
+ */
 std::vector<cg3::Point2Dd> DAG::getPoints() const{
     return points;
 }
 
+/**
+ * @brief Get number of points.
+ */
 int DAG::getNPoints() const{
     return nPoints;
 }
