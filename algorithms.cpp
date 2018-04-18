@@ -5,6 +5,9 @@
 
 /**
  * @brief Find triangle from point.
+ * @param vertex
+ * @param graph
+ * @return index of the triangle in the DAG
  *
  * This method finds the leaf triangle where the given
  * point lies on.
@@ -39,6 +42,9 @@ int findTriangle(const cg3::Point2Dd& vertex, const DAG& graph){
 
 /**
  * @brief Performs the edge flip of two adjacent triangles.
+ * @param triangle1
+ * @param triangle2
+ * @param graph
  *
  * This method creates two new nodes corrisponding to result of
  * flipping the common edge of the two given triangle indices.
@@ -96,6 +102,9 @@ void edgeFlip(int triangle1, int triangle2, DAG &graph){
 
 /**
  * @brief Compute the legalization checking.
+ * @param triangle
+ * @param graph
+ * @param triangulation
  *
  * The method checks if the first point of the triangle
  * (which corresponds to the new vertex) is inside the
@@ -123,6 +132,9 @@ void legalizeEdge(int triangle, DAG &graph, Triangulation& triangulation){
 
 /**
  * @brief Add new nodes to the DAG.
+ * @param triangle
+ * @param newPoint
+ * @param graph
  *
  * The funcion take in input the new point and the leaf in which
  * we want to create the new nodes. AddNodes modifies the DAG
@@ -171,6 +183,9 @@ void addNodes(int triangle,const cg3::Point2Dd& newPoint, DAG& graph){
 
 /**
  * @brief Insert new vertex and derived nodes.
+ * @param newVertex
+ * @param triangulation
+ * @param graph
  *
  * This method handles the creation of all the new nodes
  * and triangle of the DAG and the triangulation given

@@ -13,6 +13,7 @@ DAG::DAG(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3): bounding1(p1), b
 
 /**
  * @brief Add new node.
+ * @param newNode
  */
 void DAG::addNode(Triangle newNode){
     nodes.push_back(newNode);
@@ -21,6 +22,7 @@ void DAG::addNode(Triangle newNode){
 
 /**
  * @brief Add new point.
+ * @param newPoint
  */
 void DAG::addPoint(const cg3::Point2Dd& newPoint){
     points.push_back(newPoint);
@@ -28,30 +30,35 @@ void DAG::addPoint(const cg3::Point2Dd& newPoint){
 }
 
 /**
- * @brief Changes a specific adjacency of a triangle
- *
- * Given a triangle calls the setAdj method of the Triagle class
+ * @brief Changes a specific adjacency of a triangle.
+ * @param triangle
+ * @param oldValue
+ * @param newValue
  */
 void DAG::changeTriangleAdj(int triangle, int oldValue, int newValue){
     nodes[triangle].setAdj(oldValue, newValue);
 }
 
 /**
- * @brief Add a child to a specific triangle
+ * @brief Add a child to a specific triangle.
+ * @param triangle
+ * @param child
  */
 void DAG::addTriangleChild(int triangle, int child){
     nodes[triangle].addChild(child);
 }
 
 /**
- * @brief Set the triangulation index of a triangle
+ * @brief Set the triangulation index of a triangle.
+ * @param triangle
+ * @param index
  */
 void DAG::setTriangleTriangulationIndex(int triangle, int index){
     nodes[triangle].setTriangulationIndex(index);
 }
 
 /**
- * @brief Clear all the data of the class
+ * @brief Clear all the data of the class.
  */
 void DAG::clearGraph(){
     nodes.clear();
@@ -59,7 +66,7 @@ void DAG::clearGraph(){
 }
 
 /**
- * @brief Initialize the data for the root node
+ * @brief Initialize the data for the root node.
  *
  * The root node is the triangle composed by the given bounding triangle
  * so this method adds the vertices to the points vector and the initialized
@@ -77,7 +84,8 @@ void DAG::initializeBounding(){
 }
 
 /**
- * @brief Get Points vector.
+ * @brief Get Points list.
+ * @return Vector of Points.
  */
 std::vector<cg3::Point2Dd> DAG::getPoints() const{
     return points;

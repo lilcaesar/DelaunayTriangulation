@@ -6,6 +6,12 @@ DrawableTriangulation::DrawableTriangulation(DAG *graph): Triangulation(graph), 
 
 }
 
+/**
+ * @brief Draws the triangles and the Voronoi edges
+ *
+ * This method calls the cg3::viewer functions for drawing the edges of the triangles
+ * and the edges of the Voronoi graph if requested.
+ */
 void DrawableTriangulation::draw() const{
     for(unsigned int i =0 ; i < triangulationTriangles.size(); i++){
         if(drawBounding){
@@ -32,18 +38,32 @@ void DrawableTriangulation::draw() const{
     }
 }
 
+/**
+ * @brief Return the center of the object
+ */
 cg3::Pointd DrawableTriangulation::sceneCenter() const{
     return cg3::Pointd(0,0);
 }
 
+/**
+ * @brief Return the scene radius
+ */
 double DrawableTriangulation::sceneRadius() const{
     return 1e+7;
 }
 
+/**
+ * @brief Set if drawing the bounding triangle is wanted
+ * @param value: boolean
+ */
 void DrawableTriangulation::setDrawBounding(bool value){
     drawBounding=value;
 }
 
+/**
+ * @brief Set if drawing the Voronoi graph is wanted
+ * @param value: boolean
+ */
 void DrawableTriangulation::setDrawVoronoi(bool value){
     drawVoronoi=value;
 }

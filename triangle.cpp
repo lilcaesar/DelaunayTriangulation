@@ -1,20 +1,16 @@
 #include "triangle.h"
 #include <algorithm>
 
-Triangle::Triangle(int p1, int p2, int p3) : p_1(p1), p_2(p2), p_3(p3){
-
-}
-
-Triangle::Triangle(int p1, int p2, int p3, int adj1, int adj2, int adj3) : p_1(p1), p_2(p2), p_3(p3){
-    adjacencies.push_back(adj1);
-    adjacencies.push_back(adj2);
-    adjacencies.push_back(adj3);
-}
-
-Triangle::Triangle(int p1, int p2, int p3, int DAGIndex) : triangleDAGIndex(DAGIndex), p_1(p1), p_2(p2), p_3(p3){
-
-}
-
+/**
+ * @brief Triangle constructor
+ * @param p1: index of the first vertex in the points vector
+ * @param p2: index of the second vertex in the points vector
+ * @param p3: index of the third vertex in the points vector
+ * @param DAGIndex: index of the triangle
+ * @param adj1
+ * @param adj2
+ * @param adj3
+ */
 Triangle::Triangle(int p1, int p2, int p3, int DAGIndex, int adj1, int adj2, int adj3) : triangleDAGIndex(DAGIndex), p_1(p1), p_2(p2), p_3(p3){
     adjacencies.push_back(adj1);
     adjacencies.push_back(adj2);

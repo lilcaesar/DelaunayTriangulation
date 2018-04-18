@@ -8,9 +8,6 @@ class Triangle
 {
 public:
 
-    Triangle(int p1, int p2, int p3);
-    Triangle(int p1, int p2, int p3, int adj1, int adj2, int adj3);
-    Triangle(int p1, int p2, int p3, int DAGIndex);
     Triangle(int p1, int p2, int p3, int DAGIndex, int adj1, int adj2, int adj3);
 
     inline int p1() const{

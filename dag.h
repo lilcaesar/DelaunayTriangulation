@@ -11,16 +11,30 @@ public:
 
     /**
      * @brief Return a triangle.
+     * @param index
+     * @return Triangle in index position.
      *
      * Given a triangle DAG index returns the triangle.
      */
     inline const Triangle &getTriangle(int index) const{
         return nodes[index];
     }
+
+    /**
+     * @brief Return a point
+     * @param index
+     * @return Point in index position.
+     *
+     * Given a point index returns the point.
+     */
     inline const cg3::Point2Dd &getPoint(int index) const{
         return points[index];
     }
 
+    /**
+     * @brief Return the number of triangle nodes in the DAG.
+     * @return Integer corresponding to the number of nodes
+     */
     inline int getNtriangles() const{
         return nTriangle;
     }
