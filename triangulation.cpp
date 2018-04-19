@@ -84,7 +84,7 @@ void Triangulation::computeBisector(const cg3::Point2Dd &p1,  const cg3::Point2D
  */
 cg3::Point2Dd Triangulation::computeCircumcenter(int Triangle) const{
     //The circumcenter is the point where all the bisectors intersect
-    //in our case the intersection of two bisectors is enough
+    //in a triangle the intersection of two bisectors is enough
     double a1,b1,c1,a2,b2,c2;
     computeBisector(DAGtriangles->getPoint(DAGtriangles->getNode(Triangle).p1()),
                     DAGtriangles->getPoint(DAGtriangles->getNode(Triangle).p2()),a1,b1,c1);

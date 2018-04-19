@@ -228,7 +228,12 @@ void DelaunayManager::on_loadPointsPushButton_clicked() {
 
         std::random_shuffle(points.begin(), points.end());
         for(cg3::Point2Dd p : points){
-            insertVertex(p, triangulation, dag);
+            if(!(insertVertex(p, triangulation, dag))){
+                //Error message if the point has same coordinates of another existing point
+                QMessageBox::warning(this, "Cannot insert point", "Point [" +
+                                     QString::number(p.x()) + "," + QString::number(p.y()) +
+                                     "] is already in the DAG.");
+            }
         }
         /****/
 
@@ -269,7 +274,12 @@ void DelaunayManager::point2DClicked(const cg3::Point2Dd& p) {
 
         //Manage here the insertion of the point inside the triangulation
         /******/
-        insertVertex(p, triangulation, dag);
+        if(!(insertVertex(p, triangulation, dag))){
+            //Error message if the point has same coordinates of another existing point
+            QMessageBox::warning(this, "Cannot insert point", "Point [" +
+                                 QString::number(p.x()) + "," + QString::number(p.y()) +
+                                 "] is already in the DAG.");
+        }
         /******/
 
     }

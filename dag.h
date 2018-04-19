@@ -6,7 +6,6 @@
 class DAG
 {
 public:
-    DAG();
     DAG(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3);
 
     /**

@@ -1,7 +1,14 @@
 #include "dag.h"
 
-DAG::DAG(): nTriangle(0){
-}
+/**
+ * @brief DAG constructor.
+ * @param p1: First point of the first triangle.
+ * @param p2: Second point of the first triangle.
+ * @param p3: Third point of the first triangle.
+ *
+ * The constructor takes in input the points describing the first triangle that will
+ * be used as bounding triangle. It will be the first node of the graph.
+ */
 DAG::DAG(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3): bounding1(p1), bounding2(p2), bounding3(p3), nPoints(3), nTriangle(1){
     points.push_back(p1);
     points.push_back(p2);

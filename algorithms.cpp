@@ -23,21 +23,26 @@ int findTriangle(const cg3::Point2Dd& vertex, const DAG& graph){
                                        graph.getPoint(graph.getNode(child1).p2()),
                                        graph.getPoint(graph.getNode(child1).p3()),
                                        vertex, true
-                                       ))
-        {
+                                       )){
             finalTriangle = child1;
         }
         else if(cg3::isPointLyingInTriangle(graph.getPoint(graph.getNode(child2).p1()),
                                              graph.getPoint(graph.getNode(child2).p2()),
                                              graph.getPoint(graph.getNode(child2).p3()),
                                              vertex, true
-                                             ))
-        {
+                                             )){
             finalTriangle = child2;
         }
         else{
             finalTriangle = graph.getNode(finalTriangle).getChild3();
         }
+    }
+
+    //Check if the new vertex is equal to any vertex of the leaf triangle
+    if((vertex==graph.getPoint(graph.getNode(finalTriangle).p1()))||
+       (vertex==graph.getPoint(graph.getNode(finalTriangle).p2()))||
+       (vertex==graph.getPoint(graph.getNode(finalTriangle).p3()))){
+        finalTriangle=-1;
     }
 
     return finalTriangle;
@@ -63,10 +68,16 @@ void edgeFlip(int triangle1, int triangle2, DAG &graph){
 
     //Then create the new nodes based on the value we have on the initial triangles
     if(oppositePointPosition==1){
+
+        //The first child has the first two points of the triangle1 and the opposite point of triangle2
         graph.addNode(DagNode(graph.getNode(triangle1).p1(), graph.getNode(triangle1).p2(), graph.getNode(triangle2).p1(),
                                  nTriangle-2, graph.getNode(triangle1).getAdj1(), graph.getNode(triangle2).getAdj3(), nTriangle-1));
+
+        //The second child has the first point of triangle1, the opposite point of triangle2
+        //and the following point of the same triangle
         graph.addNode(DagNode(graph.getNode(triangle1).p1(), graph.getNode(triangle2).p1(), graph.getNode(triangle2).p2(),
                                  nTriangle-1, nTriangle-2, graph.getNode(triangle2).getAdj1(), graph.getNode(triangle1).getAdj3()));
+        //If the origin triangle2 has valid adjacencies update the adjacency values of its old neighbours
         if(graph.getNode(triangle2).getAdj1()!=-1){
             graph.changeTriangleAdj(graph.getNode(triangle2).getAdj1(), triangle2, nTriangle-1);
         }
@@ -74,7 +85,8 @@ void edgeFlip(int triangle1, int triangle2, DAG &graph){
             graph.changeTriangleAdj(graph.getNode(triangle2).getAdj3(), triangle2, nTriangle-2);
         }
 
-    }else if(oppositePointPosition==2){
+    }
+    else if(oppositePointPosition==2){
         graph.addNode(DagNode(graph.getNode(triangle1).p1(), graph.getNode(triangle1).p2(), graph.getNode(triangle2).p2(),
                                  nTriangle-2, graph.getNode(triangle1).getAdj1(), graph.getNode(triangle2).getAdj1(), nTriangle-1));
         graph.addNode(DagNode(graph.getNode(triangle1).p1(), graph.getNode(triangle2).p2(), graph.getNode(triangle2).p3(),
@@ -85,7 +97,8 @@ void edgeFlip(int triangle1, int triangle2, DAG &graph){
         if(graph.getNode(triangle2).getAdj1()!=-1){
             graph.changeTriangleAdj(graph.getNode(triangle2).getAdj1(), triangle2, nTriangle-2);
         }
-    }else if(oppositePointPosition==3){
+    }
+    else if(oppositePointPosition==3){
         graph.addNode(DagNode(graph.getNode(triangle1).p1(), graph.getNode(triangle1).p2(), graph.getNode(triangle2).p3(),
                                  nTriangle-2, graph.getNode(triangle1).getAdj1(), graph.getNode(triangle2).getAdj2(), nTriangle-1));
         graph.addNode(DagNode(graph.getNode(triangle1).p1(), graph.getNode(triangle2).p3(), graph.getNode(triangle2).p1(),
@@ -98,7 +111,7 @@ void edgeFlip(int triangle1, int triangle2, DAG &graph){
         }
     }
 
-    //Update the adjacencies
+    //Update the adjacencies of triangle1 old neighbours
     graph.changeTriangleAdj(graph.getNode(triangle1).getAdj1(), triangle1, nTriangle-2);
     graph.changeTriangleAdj(graph.getNode(triangle1).getAdj3(), triangle1, nTriangle-1);
 
@@ -165,34 +178,33 @@ void addNodes(int triangle,const cg3::Point2Dd& newPoint, DAG& graph){
     int adj3=graph.getNode(triangle).getAdj3();
     int nPoints=graph.getNPoints();
     int nTriangles= graph.getNtriangles()+3;
-    //adj==-1 means outside the bounding triangle
+
+    //The new nodes will be three triangle build as:
+    //T1(newVertex, father.p1, father.p2)
+    //T2(newVertex, father.p2, father.p3)
+    //T3(newVertex, father.p3, father.p1)
+
+
+    graph.addNode(DagNode(nPoints-1, graph.getNode(triangle).p1(), graph.getNode(triangle).p2(), nTriangles-3,
+                           nTriangles-1, adj1, nTriangles-2));
+    graph.addNode(DagNode(nPoints-1, graph.getNode(triangle).p2(), graph.getNode(triangle).p3(), nTriangles-2,
+                             nTriangles-3, adj2, nTriangles-1));
+    graph.addNode(DagNode(nPoints-1, graph.getNode(triangle).p3(), graph.getNode(triangle).p1(), nTriangles-1,
+                             nTriangles-2, adj3, nTriangles-3));
+
+    //adj==-1 means outside the bounding triangle, in this case we don't need to update
+    //the adjacencies vector of the adj node.
     if(adj1>=0){
-        graph.addNode(DagNode(nPoints-1, graph.getNode(triangle).p1(), graph.getNode(triangle).p2(), nTriangles-3,
-                               nTriangles-1, adj1, nTriangles-2));
         graph.changeTriangleAdj(adj1, triangle, nTriangles-3);
-    }else{
-        graph.addNode(DagNode(nPoints-1, graph.getNode(triangle).p1(), graph.getNode(triangle).p2(), nTriangles-3,
-                               nTriangles-1, adj1, nTriangles-2));
     }
-
     if(adj2>=0){
-        graph.addNode(DagNode(nPoints-1, graph.getNode(triangle).p2(), graph.getNode(triangle).p3(), nTriangles-2,
-                                 nTriangles-3, adj2, nTriangles-1));
         graph.changeTriangleAdj(adj2, triangle, nTriangles-2);
-    }else{
-        graph.addNode(DagNode(nPoints-1, graph.getNode(triangle).p2(), graph.getNode(triangle).p3(), nTriangles-2,
-                                 nTriangles-3, adj2, nTriangles-1));
     }
-
     if(adj3>=0){
-        graph.addNode(DagNode(nPoints-1, graph.getNode(triangle).p3(), graph.getNode(triangle).p1(), nTriangles-1,
-                                 nTriangles-2, adj3, nTriangles-3));
         graph.changeTriangleAdj(adj3, triangle, nTriangles-1);
-    }else{
-        graph.addNode(DagNode(nPoints-1, graph.getNode(triangle).p3(), graph.getNode(triangle).p1(), nTriangles-1,
-                                 nTriangles-2, adj3, nTriangles-3));
     }
 
+    //Add the new children to the father node
     graph.addNodeChild(triangle, nTriangles-3);
     graph.addNodeChild(triangle, nTriangles-2);
     graph.addNodeChild(triangle, nTriangles-1);
@@ -208,23 +220,32 @@ void addNodes(int triangle,const cg3::Point2Dd& newPoint, DAG& graph){
  * and triangle of the DAG and the triangulation given
  * a new vertex.
  */
-void insertVertex(const cg3::Point2Dd& newVertex, Triangulation& triangulation, DAG& graph){
+bool insertVertex(const cg3::Point2Dd& newVertex, Triangulation& triangulation, DAG& graph){
     int triangle;
     //Find in which leaf the new vertex lies on
     triangle = findTriangle(newVertex, graph);
 
-    //Add the new nodes as child of the found leaf
-    addNodes(triangle, newVertex, graph);
+    //If the new vertex has not the same coordinates of another vertex in the DAG
+    //create the new nodes
+    if(triangle>=0){
+        //Add the new nodes as child of the found leaf
+        addNodes(triangle, newVertex, graph);
 
-    //Update the triangulation with the nes nodes
-    triangulation.swap(graph.getNode(triangle).getTriangleTriangulationIndex(),  graph.getNtriangles()-3);
-    triangulation.addTriangle(graph.getNode(graph.getNtriangles()-2));
-    triangulation.addTriangle(graph.getNode(graph.getNtriangles()-1));
+        //Update the triangulation with the nes nodes
+        triangulation.swap(graph.getNode(triangle).getTriangleTriangulationIndex(),  graph.getNtriangles()-3);
+        triangulation.addTriangle(graph.getNode(graph.getNtriangles()-2));
+        triangulation.addTriangle(graph.getNode(graph.getNtriangles()-1));
 
-    //Compute the edge legalization for the new triangles
-    //We need the variable nTriangles since legalizeEdge could add triangles so we can't use the DAG method safely
-    int nTriangles=graph.getNtriangles();
-    legalizeEdge(nTriangles-3, graph, triangulation);
-    legalizeEdge(nTriangles-2, graph, triangulation);
-    legalizeEdge(nTriangles-1, graph, triangulation);
+        //Compute the edge legalization for the new triangles
+        //We need the variable nTriangles since legalizeEdge could add triangles so we can't use the DAG method safely
+        int nTriangles=graph.getNtriangles();
+        legalizeEdge(nTriangles-3, graph, triangulation);
+        legalizeEdge(nTriangles-2, graph, triangulation);
+        legalizeEdge(nTriangles-1, graph, triangulation);
+
+        return true;
+    }
+    else{//Notify the manager about the uncorrect input
+        return false;
+    }
 }
