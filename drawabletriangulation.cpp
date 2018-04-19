@@ -15,18 +15,19 @@ DrawableTriangulation::DrawableTriangulation(DAG *graph): Triangulation(graph), 
 void DrawableTriangulation::draw() const{
     for(unsigned int i =0 ; i < triangulationTriangles.size(); i++){
         if(drawBounding){
-            cg3::viewer::drawTriangle2D(DAGtriangles->getPoint(DAGtriangles->getTriangle(triangulationTriangles[i]).p1()),
-                                        DAGtriangles->getPoint(DAGtriangles->getTriangle(triangulationTriangles[i]).p2()),
-                                        DAGtriangles->getPoint(DAGtriangles->getTriangle(triangulationTriangles[i]).p3()),
+            cg3::viewer::drawTriangle2D(DAGtriangles->getPoint(DAGtriangles->getNode(triangulationTriangles[i]).p1()),
+                                        DAGtriangles->getPoint(DAGtriangles->getNode(triangulationTriangles[i]).p2()),
+                                        DAGtriangles->getPoint(DAGtriangles->getNode(triangulationTriangles[i]).p3()),
                                         coloreLinee, 1);
         }else{
             int currentTriangle=triangulationTriangles[i];
-            if((DAGtriangles->getTriangle(currentTriangle).p1()>2)
-                    &&(DAGtriangles->getTriangle(currentTriangle).p2()>2)
-                    &&(DAGtriangles->getTriangle(currentTriangle).p3()>2)){
-                cg3::viewer::drawTriangle2D(DAGtriangles->getPoint(DAGtriangles->getTriangle(triangulationTriangles[i]).p1()),
-                                            DAGtriangles->getPoint(DAGtriangles->getTriangle(triangulationTriangles[i]).p2()),
-                                            DAGtriangles->getPoint(DAGtriangles->getTriangle(triangulationTriangles[i]).p3()),
+            //Draw only the triangles completely inside the bounding box
+            if((DAGtriangles->getNode(currentTriangle).p1()>2)
+                    &&(DAGtriangles->getNode(currentTriangle).p2()>2)
+                    &&(DAGtriangles->getNode(currentTriangle).p3()>2)){
+                cg3::viewer::drawTriangle2D(DAGtriangles->getPoint(DAGtriangles->getNode(triangulationTriangles[i]).p1()),
+                                            DAGtriangles->getPoint(DAGtriangles->getNode(triangulationTriangles[i]).p2()),
+                                            DAGtriangles->getPoint(DAGtriangles->getNode(triangulationTriangles[i]).p3()),
                                             coloreLinee, 1);
             }
         }

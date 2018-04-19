@@ -305,9 +305,9 @@ void DelaunayManager::on_checkTriangulationPushButton_clicked() {
     std::vector<int> indices = triangulation.getTriangles();
     triangles.resize(indices.size(),3);
     for(unsigned int i=0; i < indices.size(); i++){
-        triangles(i,0)=dag.getTriangle(indices[i]).p1();
-        triangles(i,1)=dag.getTriangle(indices[i]).p2();
-        triangles(i,2)=dag.getTriangle(indices[i]).p3();
+        triangles(i,0)=dag.getNode(indices[i]).p1();
+        triangles(i,1)=dag.getNode(indices[i]).p2();
+        triangles(i,2)=dag.getNode(indices[i]).p3();
     }
     /****/
 

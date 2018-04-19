@@ -6,7 +6,7 @@ DAG::DAG(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3): bounding1(p1), b
     points.push_back(p1);
     points.push_back(p2);
     points.push_back(p3);
-    nodes.push_back(Triangle(0,1,2,0,-1,-1,-1));
+    nodes.push_back(DagNode(0,1,2,0,-1,-1,-1));
     nodes[0].setTriangulationIndex(0);
 }
 
@@ -14,7 +14,7 @@ DAG::DAG(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3): bounding1(p1), b
  * @brief Add new node.
  * @param newNode
  */
-void DAG::addNode(Triangle newNode){
+void DAG::addNode(DagNode newNode){
     nodes.push_back(newNode);
     nTriangle++;
 }
@@ -43,7 +43,7 @@ void DAG::changeTriangleAdj(int triangle, int oldValue, int newValue){
  * @param triangle
  * @param child
  */
-void DAG::addTriangleChild(int triangle, int child){
+void DAG::addNodeChild(int triangle, int child){
     nodes[triangle].addChild(child);
 }
 
@@ -77,7 +77,7 @@ void DAG::initializeBounding(){
     points.push_back(bounding1);
     points.push_back(bounding2);
     points.push_back(bounding3);
-    nodes.push_back(Triangle(0,1,2,0,-1,-1,-1));
+    nodes.push_back(DagNode(0,1,2,0,-1,-1,-1));
     nodes[0].setTriangulationIndex(0);
 }
 

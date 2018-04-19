@@ -1,7 +1,7 @@
 #ifndef DAG_H
 #define DAG_H
 
-#include <triangle.h>
+#include <dagnode.h>
 
 class DAG
 {
@@ -10,13 +10,13 @@ public:
     DAG(cg3::Point2Dd p1, cg3::Point2Dd p2, cg3::Point2Dd p3);
 
     /**
-     * @brief Return a triangle.
+     * @brief Return a node.
      * @param index
-     * @return Triangle in index position.
+     * @return Node in index position.
      *
-     * Given a triangle DAG index returns the triangle.
+     * Given a node DAG index returns the node.
      */
-    inline const Triangle &getTriangle(int index) const{
+    inline const DagNode &getNode(int index) const{
         return nodes[index];
     }
 
@@ -39,11 +39,11 @@ public:
         return nTriangle;
     }
 
-    const Triangle &getRootTriangle();
-    void addNode(Triangle newNode);
+    const DagNode &getRootNode();
+    void addNode(DagNode newNode);
     void addPoint(const cg3::Point2Dd& newPoint);
     void changeTriangleAdj(int triangle, int oldValue, int newValue);
-    void addTriangleChild(int triangle, int child);
+    void addNodeChild(int triangle, int child);
     void setTriangleTriangulationIndex(int triangle, int index);
     void clearGraph();
     void initializeBounding();
@@ -57,7 +57,7 @@ private:
     std::vector<cg3::Point2Dd> points;
     int nPoints;
     int nTriangle;
-    std::vector<Triangle> nodes;
+    std::vector<DagNode> nodes;
 };
 
 #endif // DAG_H
