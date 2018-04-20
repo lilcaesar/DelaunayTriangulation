@@ -149,8 +149,8 @@ void legalizeEdge(int triangle, DAG &graph, Triangulation& triangulation){
             edgeFlip(graph.getNode(triangle).getTriangleDAGIndex(), graph.getNode(triangle).getAdj2(), graph);
 
             //Substitute the triangles in the triangulation
-            triangulation.swap(graph.getNode(triangle).getTriangleTriangulationIndex(), graph.getNtriangles()-2);
-            triangulation.swap(graph.getNode(graph.getNode(triangle).getAdj2()).getTriangleTriangulationIndex(), graph.getNtriangles()-1);
+            triangulation.swap(graph.getNode(triangle).getTriangulationIndex(), graph.getNtriangles()-2);
+            triangulation.swap(graph.getNode(graph.getNode(triangle).getAdj2()).getTriangulationIndex(), graph.getNtriangles()-1);
 
             //Call the legalization for the new triangles
             int nTriangles = graph.getNtriangles();
@@ -232,7 +232,7 @@ bool insertVertex(const cg3::Point2Dd& newVertex, Triangulation& triangulation, 
         addNodes(triangle, newVertex, graph);
 
         //Update the triangulation with the nes nodes
-        triangulation.swap(graph.getNode(triangle).getTriangleTriangulationIndex(),  graph.getNtriangles()-3);
+        triangulation.swap(graph.getNode(triangle).getTriangulationIndex(),  graph.getNtriangles()-3);
         triangulation.addTriangle(graph.getNode(graph.getNtriangles()-2));
         triangulation.addTriangle(graph.getNode(graph.getNtriangles()-1));
 

@@ -46,8 +46,8 @@ int DagNode::getTriangleDAGIndex() const{
 /**
  * @brief Get the triangulation index of the node.
  */
-int DagNode::getTriangleTriangulationIndex() const{
-    return triangleTriangulationIndex;
+int DagNode::getTriangulationIndex() const{
+    return triangulationIndex;
 }
 
 /**
@@ -61,5 +61,5 @@ bool DagNode::isLeaf() const{
  * @brief Set the index of the triangulation.
  */
 void DagNode::setTriangulationIndex(int index){
-    triangleTriangulationIndex = index;
+    triangulationIndex = index;
 }

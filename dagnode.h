@@ -50,13 +50,13 @@ public:
     void addChild(int child);
     void changeAdj(int oldValue, int newValue);
     int getTriangleDAGIndex() const;
-    int getTriangleTriangulationIndex() const;
+    int getTriangulationIndex() const;
     bool isLeaf() const;
     void setTriangulationIndex(int index);
 
 private:
     int triangleDAGIndex;
-    int triangleTriangulationIndex;
+    int triangulationIndex;
 
     //adj1 is related to p_1-p_2, adj2 to p_2-p_3 and adj3 to p_3-p_1
     std::vector<int> adjacencies;
