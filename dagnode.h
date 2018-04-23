@@ -1,6 +1,8 @@
 #ifndef DAGNODE_H
 #define DAGNODE_H
 
+#include <vector>
+#include <cg3/geometry/2d/point2d.h>
 #include "triangle.h"
 
 class DagNode: public Triangle{

@@ -1,9 +1,6 @@
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
 
-#include <vector>
-#include <cg3/geometry/2d/point2d.h>
-
 class Triangle
 {
 public:
