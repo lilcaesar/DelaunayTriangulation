@@ -10,7 +10,6 @@ public:
     Triangulation(DAG *graph);
     void clearTriangulation();
     void initializeBounding();
-    std::vector<cg3::Point2Dd*> getTriangleVertices(int triangleIndex);
     void swap(int oldTriangleIndex, int newTriangle);
     void addTriangle(const DagNode &triangle);
     std::vector<int> getTriangles() const;
