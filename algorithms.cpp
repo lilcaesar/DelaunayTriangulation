@@ -249,3 +249,73 @@ bool insertVertex(const cg3::Point2Dd& newVertex, Triangulation& triangulation, 
         return false;
     }
 }
+
+/**
+ * @brief Computes the equation variables for the bisector of a segment.
+ * @param p1: First point of the segment.
+ * @param p2: Second point of the segment.
+ * @param a: First equation variable.
+ * @param b: Second equation variable.
+ * @param c: Third equation variable.
+ *
+ * The method set a, b and c (as in ax+by=c) corresponding to the bisector of p1p2.
+ */
+void computeBisector(const cg3::Point2Dd &p1,  const cg3::Point2Dd &p2, double &a, double &b, double &c){
+    //First compute the equation of the line passing through p1 and p2
+    a=p2.y()-p1.y();
+    b=p1.x()-p2.x();
+    c=a*(p1.x())+b*(p1.y());
+    //Then compute its perpendicular passing through the midpoint of p1p2
+    double midx=(p1.x()+p2.x())/2;
+    double midy=(p1.y()+p2.y())/2;
+    double aux=a;
+    c=(-b*(midx))+(a*(midy));
+    a=-b;
+    b=aux;
+}
+
+/**
+ * @brief Compute the circumcenter of a triangle.
+ * @param Triangle: DAG index of the triangle.
+ * @return Point associated with the circumcenter of the input triangle.
+ *
+ * This method computes the bisector of two edges of the triangle first
+ * and returns the intersection point of the two bisectors.
+ */
+cg3::Point2Dd computeCircumcenter(int Triangle, DAG& dag){
+    //The circumcenter is the point where all the bisectors intersect
+    //in a triangle the intersection of two bisectors is enough
+    double a1,b1,c1,a2,b2,c2;
+    computeBisector(dag.getPoint(dag.getNode(Triangle).p1()),
+                    dag.getPoint(dag.getNode(Triangle).p2()),a1,b1,c1);
+    computeBisector(dag.getPoint(dag.getNode(Triangle).p2()),
+                    dag.getPoint(dag.getNode(Triangle).p3()),a2,b2,c2);
+    return(cg3::Point2Dd((b2*c1-b1*c2)/(a1*b2-a2*b1),
+                         (a1*c2-a2*c1)/(a1*b2-a2*b1)));
+}
+
+/**
+ * @brief Compute the Voronoi graph from the triangulation.
+ *
+ * The method fills the voronoiEdges vector with couples of points associated to the edges of the
+ * Voronoi graph itself. The for loop computes the edges from the circumcenter of each triangle
+ * in the triangulation vector to the circumcenter of the adjacent triangles.
+ */
+void computeVoronoiPoints(Triangulation& triangulation, DAG& dag){
+    triangulation.clearVoronoi();
+    for(int i : triangulation.getTriangles()){
+        cg3::Point2Dd currentCircumcenter=computeCircumcenter(i, dag);
+        if(dag.getNode(i).getAdj1()!=-1){
+            triangulation.addPointInVoronoiEdges(currentCircumcenter);
+            triangulation.addPointInVoronoiEdges(computeCircumcenter(dag.getNode(i).getAdj1(), dag));
+        }
+        if(dag.getNode(i).getAdj2()!=-1){
+            triangulation.addPointInVoronoiEdges(currentCircumcenter);
+            triangulation.addPointInVoronoiEdges(computeCircumcenter(dag.getNode(i).getAdj2(), dag));
+        }
+        if(dag.getNode(i).getAdj3()!=-1){
+            triangulation.addPointInVoronoiEdges(currentCircumcenter);
+            triangulation.addPointInVoronoiEdges(computeCircumcenter(dag.getNode(i).getAdj3(), dag));
+        }
+    }
+}

@@ -362,7 +362,8 @@ void DelaunayManager::on_generatePointsFilePushButton_clicked() {
  * of the set of points on the canvas.
  */
 void DelaunayManager::on_voronoiDiagramPushButton_clicked(){
-    triangulation.computeVoronoiPoints();
+    //triangulation.computeVoronoiPoints();
+    computeVoronoiPoints(triangulation, dag);
     triangulation.setDrawVoronoi(true);
     mainWindow.updateGlCanvas();
 }
